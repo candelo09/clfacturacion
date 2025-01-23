@@ -1,0 +1,232 @@
+<form [formGroup]="formProducto" (ngSubmit)="createProducto()">
+  <div class="modal fade" id="modalProducto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <div class="card card-primary">
+
+          <div class="modal-header card-header">
+
+            <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i> REGISTRAR PRODUCTO
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="card-body">
+
+            <div class="row">
+              <div class="col-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-barcode"></i></span>
+                  </div>
+                  <input type="text" class="form-control " formControlName="code_prod" placeholder="Ingrese código"
+                    required>
+
+                </div>
+                <span class="text-danger" *ngIf="!validateFormProduct">*</span>
+              </div>
+              <div class="col-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-layer-group"></i></span>
+                  </div>
+                  <select class="form-select" (change)="selectCategory()" formControlName="category">
+                    <option selected>Seleccione una categoria</option>
+                    <option *ngFor="let category of categorias">
+                      {{category.category}}</option>
+
+                  </select>
+
+                </div>
+                <span class="text-danger" *ngIf="!validateFormProduct">*</span>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fab fa-product-hunt"></i></span>
+              </div>
+              <input type="text" class="form-control " formControlName="description"
+                placeholder="Ingrese nombre del producto" required>
+
+            </div>
+            <span class="text-danger" *ngIf="!validateFormProduct">*</span>
+
+            <div class="row">
+              <div class="col-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
+                  </div>
+                  <input type="number" class="form-control " formControlName="purchase_price"
+                    placeholder="Valor de compra del producto" required>
+
+                </div>
+                <span class="text-danger" *ngIf="!validateFormProduct">*</span>
+              </div>
+              <div class="col-6">
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
+                  </div>
+                  <input type="number" class="form-control " formControlName="sales_price"
+                    placeholder="Valor de venta del producto" required>
+
+                </div>
+                <span class="text-danger" *ngIf="!validateFormProduct">*</span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-calendar-times"></i></span>
+                  </div>
+                  <input type="date" class="form-control " formControlName="expire_date" data-bs-toggle="tooltip"
+                    data-bs-placement="top" title="Fecha de vencimiento">
+
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-expand"></i></span>
+                  </div>
+                  <input type="number" class="form-control " formControlName="stock" placeholder="Stock" required>
+                </div>
+                <span class="text-danger" *ngIf="!validateFormProduct">*</span>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary">Guardar
+                Producto</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Modal Update-->
+<div class="modal fade" id="modalUpdateProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content ">
+      <div class="card card-primary">
+        <div class="modal-header card-header">
+
+          <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i> MODIFICAR PRODUCTO
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="formProducto">
+          <div class="row">
+            <div class="col-6">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-barcode"></i></span>
+                </div>
+                <input type="text" class="form-control " formControlName="code_prod" placeholder="Ingrese código"
+                  required>
+
+              </div>
+              <span class="text-danger" *ngIf="!validateFormProduct">*</span>
+            </div>
+            <div class="col-6">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-layer-group"></i></span>
+                </div>
+                <select class="form-control" (change)="selectCategory()" formControlName="category">
+                  <!-- <option value="" selected>{{categorySelectName}}</option> -->
+                  <option *ngFor="let category of categorias">
+                    {{category.category}}</option>
+
+                </select>
+
+
+
+              </div>
+              <span class="text-danger" *ngIf="!validateFormProduct">*</span>
+            </div>
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fab fa-product-hunt"></i></span>
+            </div>
+            <input type="text" class="form-control " formControlName="description"
+              placeholder="Ingrese nombre del producto" required>
+
+          </div>
+          <span class="text-danger" *ngIf="!validateFormProduct">*</span>
+
+          <div class="row">
+            <div class="col-6">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
+                </div>
+                <input type="number" class="form-control " formControlName="purchase_price"
+                  placeholder="Valor de compra del producto" required>
+
+              </div>
+              <span class="text-danger" *ngIf="!validateFormProduct">*</span>
+            </div>
+            <div class="col-6">
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
+                </div>
+                <input type="number" class="form-control " formControlName="sales_price"
+                  placeholder="Valor de venta del producto" required>
+
+              </div>
+              <span class="text-danger" *ngIf="!validateFormProduct">*</span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-calendar-times"></i></span>
+                </div>
+                <input type="date" class="form-control " formControlName="expire_date" data-bs-toggle="tooltip"
+                  data-bs-placement="top" title="Fecha de vencimiento">
+
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-expand"></i></span>
+                </div>
+                <input type="number" class="form-control " formControlName="stock" placeholder="Stock" required>
+              </div>
+              <span class="text-danger" *ngIf="!validateFormProduct">*</span>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary" (click)="editProduct()">Modificar
+              Producto</button>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

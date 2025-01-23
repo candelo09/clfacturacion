@@ -1,0 +1,250 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Clientes</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Clientes</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="content">
+  <div class="container-fluid">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUser">
+      Crear Cliente
+    </button>
+    <div>
+      <hr>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Tabla Clientes</h3>
+            <div class="card-tools">
+              <div class="input-group input-group-sm" style="width: 150px;">
+                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-default">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body table-responsive p-0" style="height: 300px;">
+            <table class="table table-head-fixed text-nowrap">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th>Documento</th>
+                  <th>Telefono</th>
+                  <th>email</th>
+                  <th>Fecha Ultimo Pago</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let customer of customers let indice = index">
+                  <td>{{indice+1}}</td>
+                  <td>{{customer.name}}</td>
+                  <td>{{customer.id_document}}</td>
+                  <td>{{customer.phone}}</td>
+                  <td>{{customer.email}}</td>
+                  <td>{{customer.last_purchase| date: 'dd-MM-yyyy : hh:mm': 'UTC-5'}}</td>
+                  <td>
+
+                    <button class="btn btn-secondary" (click)="seeAll(customer)" data-bs-toggle="modal"
+                      data-bs-target="#vermas"><i class="fas fa-thin fa-eye"></i>
+                    </button>
+
+                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalUpdateUser"
+                      (click)="getCustomerById(customer)"><i class="fas fa-thin fa-pen"></i>
+                    </button>
+
+                    <button class="btn btn-danger" (click)="deleteByIdCustomer(customer.id)"><i
+                        class="fas fa-thin fa-trash"></i></button>
+
+
+
+                  </td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Modal Ver Más -->
+<div class="modal fade" id="vermas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+  data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Detalles sobre <i
+            class="text-secondary">{{customerViewMore.name}}</i></h5>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="cleanViewMore()"></button>
+      </div>
+      <div class="modal-body">
+        <ol class="list-group list-group-numbered">
+
+
+          <div *ngIf="!showTableInfoAdi" class="container">
+            <h5 *ngIf="statusPlan" class="modal-title text-center"> <span class="badge bg-success ">Plan Actual</span>
+            </h5>
+            <h5 *ngIf="!statusPlan" class="modal-title text-center"> <span class="badge bg-danger ">No Cuenta con un
+                Plan Actual</span></h5>
+            <div class="row mt-2">
+              <div class="col-6">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">Dias restantes</div>
+                    {{customerViewMore.remaining_days}}
+                  </div>
+                </li>
+              </div>
+              <div class="col-6">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">Fecha Inicial del plan</div>
+                    {{customerViewMore.membership_start_date| date: 'dd-MM-yyyy': 'UTC-5'}}
+                  </div>
+                </li>
+              </div>
+            </div>
+
+            <div class="row mt-2">
+              <div class="col-6">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">Fecha Final del Plan</div>
+                    {{customerViewMore.membership_end_date| date: 'dd-MM-yyyy': 'UTC-5'}}
+                  </div>
+                </li>
+              </div>
+              <div class="col-6">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">Musculatura</div>
+                    {{customerViewMore.musculature}}%
+                  </div>
+
+                </li>
+              </div>
+            </div>
+
+            <div class="row mt-2">
+              <div class="col-6">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">Peso</div>
+                    {{customerViewMore.weight}}
+                  </div>
+                </li>
+              </div>
+              <div class="col-6">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">Estatura</div>
+                    {{customerViewMore.stature}}
+                  </div>
+                </li>
+              </div>
+
+            </div>
+
+            <div class="row mt-2">
+              <div class="col-6">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">Masa Corporal</div>
+                    {{customerViewMore.body_fat}}
+                  </div>
+
+                </li>
+              </div>
+              <div class="col-6">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">Fecha Pago</div>
+                    {{customerViewMore.paid_date | date: 'dd-MM-yyyy': 'UTC-5'}}
+                  </div>
+
+                </li>
+              </div>
+            </div>
+
+            <div class="row mt-2">
+              <div class="col-12">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">Plan</div>
+                    {{customerViewMore.type_membership}}
+                  </div>
+                </li>
+              </div>
+
+            </div>
+          </div>
+        </ol>
+        <hr>
+        <div class="container">
+          <div class="row mt-2">
+            <div class="col-12">
+              <h5 *ngIf="!showTableInfoAdi" class="modal-title text-end"> <span class="badge bg-primary rounded-pill"
+                  style="cursor: pointer;" (click)="getCustomerByDocument(customerViewMore)">Ver Historial</span></h5>
+              <h5 *ngIf="showTableInfoAdi" class="modal-title text-end"> <span class="badge bg-danger rounded-pill"
+                  style="cursor: pointer;" (click)="cleanShowTableHistory()">Ocultar Historial</span></h5>
+            </div>
+          </div>
+        </div>
+
+        <table *ngIf="showTableInfoAdi" class="table table-sm">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Ultimo Pago</th>
+              <th scope="col">Plan</th>
+              <th scope="col">Peso</th>
+              <th scope="col">Estatura</th>
+              <th scope="col">Masa Corporal</th>
+              <th scope="col">Musculatura</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let customerHistory of customersDataHistory let indice = index">
+              <td>{{indice+1}}</td>
+              <td>{{customerHistory.paid_date | date: 'dd-MM-yyyy': 'UTC-5'}}</td>
+              <td>{{customerHistory.type_membership}}</td>
+              <td>{{customerHistory.weight}}</td>
+              <td>{{customerHistory.stature}}</td>
+              <td>{{customerHistory.body_fat}}</td>
+              <td>{{customerHistory.musculature}}%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<app-customers-form></app-customers-form>

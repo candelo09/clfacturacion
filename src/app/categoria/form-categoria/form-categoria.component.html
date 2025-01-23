@@ -1,0 +1,76 @@
+<!-- Modal -->
+<form [formGroup]="formCategoria" (ngSubmit)="createCategoria()">
+    <div class="modal fade" id="modalCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+
+                <div class="card card-primary">
+
+                    <div class="modal-header card-header">
+
+                        <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i> REGISTRAR CATEGORIA
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="card-body">
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+                            </div>
+                            <input type="text" class="form-control text-uppercase" formControlName ="category" placeholder="Ingrese nombre" required>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Guardar
+                                Categoria</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Modal Update-->
+<div class="modal fade" id="modalUpdateCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content ">
+            <div class="card card-primary">
+                <div class="modal-header card-header">
+
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i> MODIFICAR CATEGORIA
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <form [formGroup]="formCategoria">
+                <div class="card-body">
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+                        </div>
+                        <input type="text" formControlName ="category" class="form-control">
+                        <input type="hidden" formControlName = "id" class="form-control ">
+                    </div>
+
+
+                </div>
+            </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" (click)="updateCategory()">Guardar
+                    Categoria</button>
+            </div>
+        </div>
+    </div>
+</div>

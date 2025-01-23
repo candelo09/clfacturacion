@@ -1,0 +1,139 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Productos</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Productos</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="content">
+  <div class="container-fluid">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalProducto">
+      Crear Producto
+    </button>
+    <div>
+      <hr>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Tabla Productos</h3>
+            <div class="card-tools">
+              <div class="input-group input-group-sm" style="width: 150px;">
+                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-default">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body table-responsive p-0" style="height: 300px;">
+            <table class="table table-head-fixed text-nowrap">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Codigo</th>
+                  <th>Descripción</th>
+                  <th>Stock</th>
+                  <th>Precio de compra</th>
+                  <th>Precio de venta</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let producto of productos let indice = index">
+                  <td>{{indice+1}}</td>
+                  <td>{{producto.code_prod}}</td>
+                  <td>{{producto.description}}</td>
+                  <td>{{producto.stock}}</td>
+                  <td>{{producto.purchase_price | currency}}</td>
+                  <td>{{producto.sales_price | currency}}</td>
+                  <td>
+
+                    <button class="btn btn-secondary" (click)="seeAll(producto)" data-bs-toggle="modal"
+                      data-bs-target="#vermas"><i class="fas fa-thin fa-eye"></i>
+                    </button>
+
+
+                    <button class="btn btn-warning" (click)="getProductoById(producto)" data-bs-toggle="modal" data-bs-target="#modalUpdateProduct"><i
+                        class="fas fa-thin fa-pen"></i>
+                    </button>
+
+
+                    <button class="btn btn-danger" (click)="deleteProduct(producto)"><i class="fas fa-thin fa-trash"></i></button>
+
+
+
+                  </td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal Ver Más -->
+<div class="modal fade" id="vermas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Más detalle sobre <i
+            class="text-secondary">{{productoVerMas.description}}</i></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ol class="list-group list-group-numbered">
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">Categoria</div>
+              {{productViewMoreCategory}}
+            </div>
+            <span class="badge bg-primary rounded-pill"><i class="fas fa-info-circle"></i></span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">Fecha de vencimiento</div>
+              {{productoVerMas.expire_date| date: 'dd-MM-yyyy': 'UTC-5'}}
+            </div>
+            <span class="badge bg-primary rounded-pill"><i class="fas fa-info-circle"></i></span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">Linea</div>
+              Genérico
+            </div>
+            <span class="badge bg-primary rounded-pill"><i class="fas fa-info-circle"></i></span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">Agregado</div>
+              {{productoVerMas.create_at| date: 'dd-MM-yyyy': 'UTC-5'}}
+            </div>
+            <span class="badge bg-primary rounded-pill"><i class="fas fa-info-circle"></i></span>
+          </li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<app-form-producto></app-form-producto>

@@ -1,0 +1,288 @@
+<!-- Modal -->
+<form [formGroup]="formColaborador" (ngSubmit)="createColaborador()">
+  <div class="modal fade" id="modalUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+
+        <div class="card card-primary">
+
+          <div class="modal-header card-header">
+
+            <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i> REGISTRAR USUARIO</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="formReset()"></button>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="card-body">
+
+            <div class="row g-3">
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+                  </div>
+                  <input type="number" class="form-control " formControlName="id_document" placeholder="No. documento"
+                    required>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-file-signature"></i></span>
+                  </div>
+                  <input type="text" class="form-control" formControlName="name" placeholder="Ingrese nombre" required>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row g-3">
+
+
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-users"></i></span>
+                  </div>
+                  <select class="form-control select2" formControlName="role" style="width: 50%;" required>
+                    <option value="" disabled selected>Elige el rol del usuario</option>
+                    <option value="ADMIN">Administrador</option>
+                    <option value="SELLER">Vendedor</option>
+                    <option value="COACH">Entrenador</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-append">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                  </div>
+                  <input type="email" class="form-control" formControlName="email" placeholder="Ingrese email" required>
+                </div>
+              </div>
+
+
+              <!-- <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-file-signature"></i></span>
+                  </div>
+                  <input type="text" class="form-control" formControlName="apellido" placeholder="Ingrese apellido"
+                    required>
+                </div>
+              </div> -->
+
+            </div>
+
+            <div class="row g-3">
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                  </div>
+                  <input type="text" class="form-control" formControlName="username" placeholder="Ingrese usuario"
+                    required>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                  </div>
+                  <input type="password" class="form-control" formControlName="password"
+                    placeholder="Ingrese contraseña">
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row g-3">
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                  </div>
+                  <input type="number" class="form-control" formControlName="telephone" placeholder="No. contacto"
+                    required>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-street-view"></i></span>
+                  </div>
+                  <input type="text" class="form-control" formControlName="address" placeholder="Ingrese dirección">
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-3">
+              <div class="col-lg-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" formControlName="state" id="flexCheckChecked" checked>
+                  <label class="form-check-label" for="flexCheckChecked">
+                    Estado usuario
+                  </label>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="row g-3">
+              <div class="col-lg-2">
+                <div class="input-group mb-3">
+                  <img src="{{imagenUser}}" class="img-thumbnail" width="150px">
+                </div>
+              </div>
+              <div class="col-lg-10">
+                <div class="mb-3">
+                  <label for="formFile" class="form-label">Subir foto</label>
+                  <input class="form-control" type="file" #imagen (change)="updateImagenUser($event)"
+                    formControlName="image">
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Guardar
+            usuario</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Modal Update-->
+<form [formGroup]="formColaborador" (ngSubmit)="updateColaborador()">
+  <div class="modal fade" id="modalUpdateUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content ">
+        <div class="card card-primary">
+          <div class="modal-header card-header">
+
+            <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i> MODIFICAR USUARIO
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="formReset()"></button>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="card-body">
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+              </div>
+              <input type="number" class="form-control" formControlName="id_document" readonly>
+              <input type="hidden" class="form-control " formControlName="id">
+            </div>
+
+            <div class="row g-3">
+              <div class="col-lg-12">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-file-signature"></i></span>
+                  </div>
+
+                  <input type="text" class="form-control" formControlName="name">
+                </div>
+              </div>
+              <!-- <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-file-signature"></i></span>
+                  </div>
+                  <input type="text" class="form-control" formControlName="apellido">
+                </div>
+              </div> -->
+            </div>
+
+            <div class="row g-3">
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                  </div>
+                  <input type="text" class="form-control" formControlName="username" readonly>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                  </div>
+                  <input type="password" class="form-control" formControlName="password">
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-append">
+                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+              </div>
+              <input type="text" class="form-control" formControlName="email">
+            </div>
+
+            <div class="row g-3">
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                  </div>
+                  <input type="number" class="form-control" formControlName="telephone">
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-street-view"></i></span>
+                  </div>
+                  <input type="text" class="form-control" formControlName="address">
+                </div>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-users"></i></span>
+              </div>
+              <select class="form-control select2" formControlName="role" style="width: 50%;">
+                <!-- <option value="" disabled selected>Elige el rol del usuario</option> -->
+                <option value="ADMIN">Administrador</option>
+                <option value="SELLER">Vendedor</option>
+                <option value="COACH">Entrenador</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="formFile" class="form-label">Subir foto</label>
+              <input class="form-control" type="file" #imagen (change)="updateImagenUser($event)"
+                formControlName="image">
+            </div>
+            <div>
+              <hr>
+            </div>
+            <div class="input-group mb-3">
+              <img src="{{imagenUser}}" class="img-thumbnail" width="150px">
+            </div>
+
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Modificar
+            usuario</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>
