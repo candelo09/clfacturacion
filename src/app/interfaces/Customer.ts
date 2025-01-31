@@ -1,7 +1,7 @@
 export interface Customer {
   id:            number;
   name:          string;
-  id_document:   string;
+  document:      string;
   email:         string;
   phone:         string;
   address:       string;
@@ -10,11 +10,13 @@ export interface Customer {
   last_purchase: Date;
   create_at:     Date;
   update_at:     Date;
+  blood_type:    string;
+  eps:           string;
 }
 
 export interface CustomerInfoAdi {
   id:                    number;
-  id_document:           string;
+  document:           string;
   name:                  string;
   paid_date:             Date;
   amount:                number;

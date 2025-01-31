@@ -1,1 +1,139 @@
-<p>customers-form works!</p>
+<form [formGroup]="formGroupCustomer" (ngSubmit)="createCustomer()">
+  <div class="modal fade" id="modalUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+
+        <div class="card card-primary">
+
+          <div class="modal-header card-header">
+
+            <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i> REGISTRAR CLIENTE</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+              (click)="formReset()"></button>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="card-body">
+
+            <div class="row g-3">
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+                  </div>
+                  <input type="text" class="form-control " formControlName="id_document" placeholder="No. documento"
+                    required>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-file-signature"></i></span>
+                  </div>
+                  <input type="text" class="form-control" formControlName="name" placeholder="Ingrese nombre" required>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row g-3">
+
+
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-birthday-cake"></i></span>
+                  </div>
+                  <input type="date" class="form-control " formControlName="date_birth" data-bs-toggle="tooltip"
+                    data-bs-placement="top" title="Fecha de nacimiento">
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-append">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                  </div>
+                  <input type="email" class="form-control" formControlName="email" placeholder="Ingrese email" required>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row g-3">
+              <div class="col-lg-3">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                  </div>
+                  <input type="text" class="form-control" formControlName="blood_type"
+                    placeholder="Ingrese el tipo de sangre" required>
+                </div>
+              </div>
+              <div class="col-3">
+                <select class="form-select"  formControlName="rh">
+                  <option selected>Seleccione una categoria</option>
+                  <option *ngFor="let rhS of rhSelect">
+                    {{rhS}}</option>
+
+                </select>
+              </div>
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                  </div>
+                  <input type="text" class="form-control" formControlName="eps" placeholder="Ingrese la eps">
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row g-3">
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                  </div>
+                  <input type="number" class="form-control" formControlName="telephone" placeholder="No. contacto"
+                    required>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-street-view"></i></span>
+                  </div>
+                  <input type="text" class="form-control" formControlName="address" placeholder="Ingrese dirección">
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-3">
+              <div class="col-lg-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" formControlName="state" id="flexCheckChecked" checked>
+                  <label class="form-check-label" for="flexCheckChecked">
+                    Estado Cliente
+                  </label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Guardar
+            usuario</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -22,7 +22,7 @@ export class CustomersService {
     }
 
     //Agregar Customer
-    public addUser(bodyCustomer: Customer) {
+    public addCustomer(bodyCustomer: Customer) {
 
       return this.http.post(`${this.routerCustomer}save`, bodyCustomer);
     }
@@ -35,12 +35,17 @@ export class CustomersService {
 
     public findByDocumentAccess(bodyCustomer: Customer): Observable<CustomerInfoAdi>{
 
-      return this.http.get<CustomerInfoAdi>(`${this.routerCustomer}access/${bodyCustomer.id_document}`);
+      return this.http.get<CustomerInfoAdi>(`${this.routerCustomer}access/${bodyCustomer.document}`);
     }
 
     public findByInfoDocument(bodyCustomer: CustomerInfoAdi): Observable<CustomerInfoAdi[]>{
 
-      return this.http.get<CustomerInfoAdi[]>(`${this.routerCustomer}info/${bodyCustomer.id_document}`);
+      return this.http.get<CustomerInfoAdi[]>(`${this.routerCustomer}info/${bodyCustomer.document}`);
+    }
+
+    public findByDocument(customer: string): Observable<Customer>{
+
+      return this.http.get<Customer>(`${this.routerCustomer}${customer}`);
     }
 
     //traerCustomer por id

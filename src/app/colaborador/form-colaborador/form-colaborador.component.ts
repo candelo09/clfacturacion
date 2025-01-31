@@ -85,8 +85,6 @@ export class FormColaboradorComponent implements OnInit {
   // Función que crea el colaborador
   public createColaborador() {
 
-
-
     this.formColaborador.value.state = this.formColaborador.value.state ? 1 : 0;
     console.log(this.formColaborador.value.state);
 
