@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoriaService } from 'src/app/categoria/categoria.service';
 import { Category } from 'src/app/interfaces/Category';
 import { ProductService } from '../producto.service';
@@ -21,7 +21,7 @@ export class FormProductoComponent implements OnInit {
 
   validateFormProduct = true;
 
-  constructor(private fb: FormBuilder, private product_service: ProductService, private category_service: CategoriaService) {
+  constructor(private fb: UntypedFormBuilder, private product_service: ProductService, private category_service: CategoriaService) {
     this.formProducto = this.fb.group({});
   }
 

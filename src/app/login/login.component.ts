@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from './login.service';
 import { Login } from '../interfaces/Login';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
     password: ['', Validators.required],
   })
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private loginService: LoginService) { }
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private loginService: LoginService) { }
 
   ngOnInit(): void {
   }
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 
       // console.log('this.loginForm.value ', this.loginForm.value);
 
-      return await lastValueFrom(this.loginService.login(this.loginForm.value as Login)).then(resp => {
+      await lastValueFrom(this.loginService.login(this.loginForm.value as Login)).then(resp => {
 
         // console.log(resp);
 
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl("/main/home")
         this.loginForm.reset();
       }).catch(errorData => {
-        console.error(errorData);
+        // console.error('errorData', errorData);
         this.loginError=errorData;
 
       });

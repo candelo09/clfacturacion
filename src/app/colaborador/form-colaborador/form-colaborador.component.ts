@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NewColaborador, Users } from 'src/app/interfaces/Colaborador';
 import Swal from 'sweetalert2';
 import { ColaboradorService } from '../colaborador.service';
@@ -23,7 +23,7 @@ export class FormColaboradorComponent implements OnInit {
 
   document: Users[] = [];
 
-  constructor(private fb: FormBuilder, private colaboradorService: ColaboradorService) {
+  constructor(private fb: UntypedFormBuilder, private colaboradorService: ColaboradorService) {
     this.formColaborador = this.fb.group({});
 
   }
@@ -43,7 +43,7 @@ export class FormColaboradorComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required],
       image: ['',],
-      state: [1, Validators.required],
+      state: [1],
       // cargo: ['', Validators.required],
       last_login: [''],
       create_at: [''],

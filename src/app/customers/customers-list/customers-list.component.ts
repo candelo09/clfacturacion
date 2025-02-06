@@ -38,8 +38,16 @@ export class CustomersListComponent implements OnInit {
 
   public getCustomerById(customer: Customer) {
 
-    // this.addCustomer.getCustomerById(customer);
+    this.addCustomer.getCustomerById(customer);
 
+  }
+
+  public resetFormCustomer(){
+
+    this.addCustomer.formReset();
+    console.log(this.addCustomer.rhSelect);
+
+    this.addCustomer.formCustomer.value.rh = 'Seleccione el RH';
   }
 
   public seeAll(customer: Customer) {

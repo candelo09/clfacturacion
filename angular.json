@@ -34,7 +34,7 @@
               "node_modules/admin-lte/plugins/fontawesome-free/css/all.css",
               "node_modules/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.css",
               "node_modules/admin-lte/dist/css/adminlte.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [
               "node_modules/admin-lte/plugins/jquery/jquery.js",
@@ -88,10 +88,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "clfacturacion:build:production"
+              "buildTarget": "clfacturacion:build:production"
             },
             "development": {
-              "browserTarget": "clfacturacion:build:development"
+              "buildTarget": "clfacturacion:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -99,7 +99,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "clfacturacion:build"
+            "buildTarget": "clfacturacion:build"
           }
         },
         "test": {
@@ -121,6 +121,5 @@
         }
       }
     }
-  },
-  "defaultProject": "clfacturacion"
+  }
 }

@@ -1,6 +1,7 @@
 <!-- Modal -->
 <form [formGroup]="formColaborador" (ngSubmit)="createColaborador()">
-  <div class="modal fade" id="modalUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal fade" id="modalUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog modal-lg modal-dialog-scrollable">
       <div class="modal-content">
 
@@ -9,7 +10,8 @@
           <div class="modal-header card-header">
 
             <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i> REGISTRAR USUARIO</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="formReset()"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+              (click)="formReset()"></button>
           </div>
         </div>
 
@@ -164,7 +166,8 @@
 
 <!-- Modal Update-->
 <form [formGroup]="formColaborador" (ngSubmit)="updateColaborador()">
-  <div class="modal fade" id="modalUpdateUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal fade" id="modalUpdateUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    data-bs-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
       <div class="modal-content ">
         <div class="card card-primary">
@@ -172,7 +175,8 @@
 
             <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i> MODIFICAR USUARIO
             </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="formReset()"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+              (click)="formReset()"></button>
           </div>
         </div>
 
@@ -268,6 +272,17 @@
                 formControlName="image">
             </div>
             <div>
+              <div class="row g-3">
+                <div class="col-lg-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" formControlName="state" id="flexCheckChecked2"
+                      checked>
+                    <label class="form-check-label" for="flexCheckChecked">
+                      Estado usuario
+                    </label>
+                  </div>
+                </div>
+              </div>
               <hr>
             </div>
             <div class="input-group mb-3">

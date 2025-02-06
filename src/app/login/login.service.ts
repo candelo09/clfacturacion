@@ -4,6 +4,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, catchError, map, Observable, tap, throwError } from 'rxjs';
 import { RespLogin } from '../interfaces/RespLogin';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -35,14 +36,15 @@ export class LoginService {
   }
 
   private handleError(error: HttpErrorResponse) {
-    if (error.status === 0) {
-      console.error('Se ha producio un error ', error.error);
-    }
-    else {
-
-      console.error('Backend retornó el código de estado ', error);
+    if (error.status === 401) {
       sessionStorage.clear();
-      this.route.navigateByUrl("/login");
+      Swal.fire({
+        title: "Error",
+        text: "Credenciales Incorrectas o usuario no autorizado",
+        icon: "error"
+      }).then(() =>{
+        window.location.reload();
+      });
     }
     return throwError(() => new Error('Credenciales Incorrectas'));
   }

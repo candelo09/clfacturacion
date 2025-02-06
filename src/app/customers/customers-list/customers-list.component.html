@@ -16,7 +16,7 @@
 
 <section class="content">
   <div class="container-fluid">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUser">
+    <button type="button" (click)="resetFormCustomer()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUser">
       Crear Cliente
     </button>
     <div>
@@ -40,7 +40,7 @@
           </div>
 
           <div class="card-body table-responsive p-0" style="height: 300px;">
-            <table class="table table-head-fixed text-nowrap" style="font-size: 0.75rem;">
+            <table class="table table-head-fixed text-nowrap">
               <thead>
                 <tr>
                   <th>#</th>
@@ -70,7 +70,7 @@
                       data-bs-target="#vermas"><i class="fas fa-thin fa-eye"></i>
                     </button>
 
-                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalUpdateUser"
+                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalUpdateCustomer"
                       (click)="getCustomerById(customer)"><i class="fas fa-thin fa-pen"></i>
                     </button>
 
