@@ -8,6 +8,8 @@ import { LoginComponent } from './login/login.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { AuthGuard } from './login/auth-guard.guard';
 import { CustomersListComponent } from './customers/customers-list/customers-list.component';
+import { MembershipListComponent } from './memberships/membership-list/membership-list.component';
+import { PaymentListComponent } from './payments/payment-list/payment-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -19,7 +21,9 @@ const routes: Routes = [
       {path: 'category', component: CategoriaListComponent},
       {path: 'colaborador', component: ColaboradorListComponent},
       {path: 'producto', component: ProductoListComponent},
-      {path: 'cliente', component: CustomersListComponent}
+      {path: 'cliente', component: CustomersListComponent},
+      {path: 'planes', component:MembershipListComponent},
+      {path: 'pago', component:PaymentListComponent}
     ], canActivate: [AuthGuard]
   },
 
