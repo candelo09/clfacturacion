@@ -1,1 +1,154 @@
-<p>membership-form works!</p>
+<!-- Modal -->
+<form [formGroup]="formMembership" (ngSubmit)="createMembership()">
+  <div class="modal fade" id="modalMembership" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+
+        <div class="card card-primary">
+
+          <div class="modal-header card-header">
+
+            <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i> REGISTRAR PLAN
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="card-body">
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+              </div>
+              <input type="text" class="form-control text-uppercase" formControlName="type_membership"
+                placeholder="Nombre del plan" required toUppercase>
+
+            </div>
+
+            <div class="row">
+              <div class="col-5">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                  </div>
+                  <input type="number" placeholder="Valor del plan" formControlName="price"
+                    class="form-control text-uppercase" >
+
+                </div>
+
+              </div>
+              <div class="col-4">
+                <select class="form-select text-uppercase" formControlName="code_plan"
+                  aria-label="Default select example">
+                  <option value="" disabled selected>Tipo de mensualidad</option>
+                  <option value="5">CLASE GRATIS</option>
+                  <option value="4">CLASE</option>
+                  <option value="1">MENSUAL</option>
+                  <option value="2">TRIMESTRAL</option>
+                  <option value="3">ANUAL</option>
+                </select>
+              </div>
+              <div class="col-3">
+
+                <div class="form-check">
+                  <input class="form-check-input" formControlName="state" type="checkbox" id="flexCheckChecked" checked>
+                  <label class="form-check-label text-uppercase" for="flexCheckChecked">
+                    Estado del Plan
+                  </label>
+                </div>
+
+
+
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary">Guardar
+                Membership</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Modal Update-->
+<form [formGroup]="formMembership" (ngSubmit)="updateMembership()">
+  <div class="modal fade" id="modalUpdateMembership" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content ">
+        <div class="card card-primary">
+          <div class="modal-header card-header">
+
+            <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i> MODIFICAR PlAN
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="card-body">
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+              </div>
+              <input type="text" class="form-control text-uppercase" formControlName="type_membership"
+                placeholder="Nombre del plan" required toUppercase>
+
+            </div>
+
+            <div class="row">
+              <div class="col-5">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                  </div>
+                  <input type="number" placeholder="Valor del plan" formControlName="price"
+                    class="form-control text-uppercase">
+
+                </div>
+
+              </div>
+              <div class="col-4">
+                <select class="form-select text-uppercase" formControlName="code_plan"
+                  aria-label="Default select example">
+                  <option value="" disabled selected>Tipo de mensualidad</option>
+                  <option value="5">Clase Gratis</option>
+                  <option value="4">Clase</option>
+                  <option value="1">Mensual</option>
+                  <option value="2">Trimestral</option>
+                  <option value="3">Anual</option>
+                </select>
+              </div>
+              <div class="col-3">
+
+                <div class="form-check">
+                  <input class="form-check-input" formControlName="state" type="checkbox" id="flexCheckChecked" checked>
+                  <label class="form-check-label text-uppercase" for="flexCheckChecked">
+                    Estado del Plan
+                  </label>
+                </div>
+
+
+
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Guardar
+            Membership</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

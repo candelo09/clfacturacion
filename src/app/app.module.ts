@@ -18,6 +18,7 @@ import { AuthInterceptorService } from './login/auth-interceptor.service';
 import { AuthGuard } from '@auth0/auth0-angular';
 import { CustomersListComponent } from './customers/customers-list/customers-list.component';
 import { CustomersFormComponent } from './customers/customers-form/customers-form.component';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -36,14 +37,15 @@ import { CustomersFormComponent } from './customers/customers-form/customers-for
     LoginComponent,
     MainNavComponent,
     CustomersListComponent,
-    CustomersFormComponent
+    CustomersFormComponent,
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ],
   providers: [
     AuthGuard,

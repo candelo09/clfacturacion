@@ -1,1 +1,97 @@
-<p>payment-list works!</p>
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Membresias</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Payments</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="content">
+  <div class="container-fluid">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPayment">
+      Nueva Membresia
+    </button>
+    <div>
+      <hr>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Tabla Pagos</h3>
+            <div class="card-tools">
+              <div class="input-group input-group-sm" style="width: 150px;">
+                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-default">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body table-responsive p-0" style="height: 300px;">
+            <table class="table table-head-fixed text-nowrap">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Cliente</th>
+                  <th>Fecha de Pago </th>
+                  <th>Metodo de Pago</th>
+                  <th>Fecha incial Plan</th>
+                  <th>Fecha Final Plan</th>
+                  <th>Tipo de Plan</th>
+                  <th>Valor</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let payment of payments let indice = index">
+                  <td>{{indice+1}}</td>
+                  <td>{{payment.customer.name}}</td>
+                  <td>{{payment.paid_date | date: 'dd-MM-yyyy : hh:mm': 'UTC-5'}}</td>
+                  <!-- <td>{{payment.code_plan}}</td> -->
+                  <td >{{payment.payment_method}}</td>
+                  <td >{{payment.membership_start_date | date: 'dd-MM-yyyy : hh:mm': 'UTC-5'}}</td>
+                  <td>{{payment.membership_end_date | date: 'dd-MM-yyyy : hh:mm': 'UTC-5'}}</td>
+                  <td>{{payment.membership.type_membership}}</td>
+                  <td>{{payment.amount| currency}}</td>
+                  <td>
+                    <div class="row">
+                      <div class="col-4">
+                        <button class="btn btn-warning" (click)="getPaymentById(payment)" data-bs-toggle="modal"
+                          data-bs-target="#modalUpdatePayment"><i class="fas fa-thin fa-pen"></i>
+                        </button>
+                      </div>
+
+                      <!-- <div class="col-4">
+                        <button class="btn btn-danger" (click)="deletePayment(payment.id)"><i
+                            class="fas fa-thin fa-trash"></i></button>
+                      </div> -->
+                    </div>
+
+                  </td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-payment-form></app-payment-form>
+
