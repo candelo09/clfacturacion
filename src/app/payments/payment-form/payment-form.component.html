@@ -8,7 +8,7 @@
 
           <div class="modal-header card-header">
 
-            <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i> REGISTRAR PLAN
+            <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i> REGISTRAR PAGO
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
@@ -17,114 +17,107 @@
         <div class="modal-body">
           <div class="card-body">
 
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"></span>
+            <div class="mb-3">
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-floating dropdown">
+                    <input type="text" id="label_customer" class="form-control text-uppercase"
+                      formControlName="customer" [value]="valueSelectCustomer" placeholder="Seleccionar Cliente"
+                      data-bs-toggle="dropdown" aria-expanded="false" (keyup)="onSeachDropdownValueCustomer($event)"
+                      toUppercase autocomplete="off" />
+                    <label for="label_customer"><i class="fa fa-users" aria-hidden="true"></i> Seleccionar
+                      Cliente</label>
+
+
+                    <ul class="scrollable-menu dropdown-menu" aria-labelledby="label_customer">
+                      <li class="dropdown-item" *ngFor="let item of this.searchedOptionsCustomer"
+                        style="cursor: pointer;" (click)="selectCustomer(item)">{{item.document}}</li>
+                    </ul>
+
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-floating dropdown">
+                    <input type="text" id="label_membership" class="form-control text-uppercase"
+                      formControlName="membership" [value]="valueSelectMembership" placeholder="Seleccionar Plan"
+                      data-bs-toggle="dropdown" aria-expanded="false" (keyup)="onSeachDropdownValueMembership($event)"
+                      toUppercase autocomplete="off" />
+                    <label for="label_membership"><i class="fa fa-arrow-right" aria-hidden="true"></i> Seleccionar
+                      Plan</label>
+
+                    <ul class="scrollable-menu dropdown-menu" aria-labelledby="label_membership">
+                      <li class="dropdown-item" *ngFor="let item of this.searchedOptionsMembership"
+                        style="cursor: pointer;" (click)="selectMembership(item)">{{item.type_membership}}</li>
+                    </ul>
+
+                  </div>
+                </div>
               </div>
-              <input type="date" class="form-control text-uppercase" formControlName="paid_date"
-                placeholder="Nombre del plan" required>
+
 
             </div>
 
 
 
             <div class="row">
-              <div class="col-5">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
-                  </div>
-                  <input type="number" placeholder="Valor a Pagar" formControlName="amount"
-                    class="form-control text-uppercase">
-
+              <div class="col-4">
+                <div class="form-floating mb-3">
+                  <input type="text" id="float_amount" placeholder="Valor a Pagar" formControlName="amount_show"
+                    class="form-control text-uppercase" readonly>
+                  <label for="float_amount"><i class="fa fa-circle" aria-hidden="true"></i> Valor a Pagar</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="hidden" id="float_amount" placeholder="Valor a Pagar" formControlName="amount"
+                    class="form-control text-uppercase" readonly>
                 </div>
 
               </div>
               <div class="col-4">
-
-                <div class="dropdown">
-                  <input type="text" class="form-control text-uppercase" id="dropdownMenuButton1" formControlName="id_customer" [value]="valueSelectCustomer" placeholder="Buscar Cliente" data-bs-toggle="dropdown" aria-expanded="false" (keyup)="onSeachDropdownValue($event)" toUppercase/>
-
-
-                  <ul class="scrollable-menu dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li class="dropdown-item" *ngFor="let item of this.searchedOptionsCustomer" style="cursor: pointer;" (click)="selectCustomer(item)">{{item.document}}</li>
-                    <!-- <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li> -->
-                  </ul>
-
+                <div class="form-floating mb-3">
+                  <input type="text" id="float_payment_method" placeholder="Metodo de pago"
+                    formControlName="payment_method" class="form-control text-uppercase">
+                  <label for="float_payment_method"><i class="fa fa-credit-card" aria-hidden="true"></i> Metodo de
+                    pago</label>
                 </div>
-
-                <!-- <input id="floatingSelectClient" class="form-control text-uppercase dropdown-toggle" type="text" placeholder="Buscar Cliente"
-                id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
-                (keyup)="onSeachDropdownValue($event)"> -->
-
-                <!-- <select class="form-select text-uppercase" for="floatingSelectClient"
-                  aria-labelledby="dropdownMenuButton1" formControlName="id_customer"
-                  aria-label="Default select example">
-                  <option value="" disabled selected>Buscar Cliente</option>
-                  <option value="5">CLASE GRATIS</option>
-                  <option value="4">CLASE</option>
-                  <option value="1">MENSUAL</option>
-                  <option value="2">TRIMESTRAL</option>
-                  <option value="3">ANUAL</option>
-                </select> -->
-
-
-
-                <!-- <div class="dropdown">
-                  <input class="form-control text-uppercase dropdown-toggle" type="text" placeholder="Buscar Cliente"
-                    id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
-                    (keyup)="onSeachDropdownValue($event)">
-
-                  <select class="dropdown-menu text-uppercase" aria-labelledby="dropdownMenuButton1" formControlName="id_customer"
-                    aria-label="Default select example">
-                    <option value="" disabled selected>Tipo de mensualidad</option>
-                    <option value="5">CLASE GRATIS</option>
-                    <option value="4">CLASE</option>
-                    <option value="1">MENSUAL</option>
-                    <option value="2">TRIMESTRAL</option>
-                    <option value="3">ANUAL</option>
-                  </select>
-
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li *ngFor="let option of options" (click)="onSelectDropdownValue(option)"><a
-                        class="dropdown-item">{{option}}</a></li>
-                  </ul>
-                </div> -->
-
-
-
-                <!-- <select class="form-select text-uppercase" formControlName="id_customer"
-                  aria-label="Default select example">
-                  <option value="" disabled selected>Tipo de mensualidad</option>
-                  <option value="5">CLASE GRATIS</option>
-                  <option value="4">CLASE</option>
-                  <option value="1">MENSUAL</option>
-                  <option value="2">TRIMESTRAL</option>
-                  <option value="3">ANUAL</option>
-                </select> -->
               </div>
-              <div class="col-3">
 
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"></span>
-                  </div>
-                  <input type="date" class="form-control text-uppercase" formControlName="membership_start_date"
-                    placeholder="Nombre del plan" required>
-
+              <div class="col-4">
+                <div class="form-floating mb-3">
+                  <input type="date" id="float_paid_date" class="form-control text-uppercase"
+                    formControlName="paid_date" required>
+                  <label for="float_paid_date"><i class="fa fa-calendar" aria-hidden="true"></i> Fecha de pago</label>
                 </div>
-
-
-
               </div>
+
+
             </div>
+
+            <div class="row">
+
+              <div class="col-12">
+                <div class="form-floating mb-3">
+                  <input type="date" id="float_start_date" class="form-control text-uppercase"
+                    formControlName="membership_start_date" required>
+                  <label for="float_start_date"><i class="fa fa-calendar" aria-hidden="true"></i> Fecha Inicial Membresía</label>
+                </div>
+              </div>
+
+              <!-- <div class="col-6">
+                <div class="form-floating mb-3">
+                  <input type="date" id="float_end_date" class="form-control text-uppercase"
+                    formControlName="membership_end_date" required>
+                  <label for="float_end_date"><i class="fa fa-calendar" aria-hidden="true"></i> Fecha Final Membresía</label>
+                </div>
+              </div> -->
+
+
+            </div>
+
+
 
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              <button type="submit" class="btn btn-primary">Guardar
-                Payment</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
 
             </div>
           </div>
@@ -134,79 +127,109 @@
   </div>
 </form>
 
+
 <!-- Modal Update-->
-<!-- <form [formGroup]="formPayment" (ngSubmit)="updatePayment()">
-  <div class="modal fade" id="modalUpdatePayment" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
-      <div class="modal-content ">
+<form [formGroup]="formPayment" (ngSubmit)="updatePayment()">
+  <div class="modal fade" id="modalUpdatePayment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+
         <div class="card card-primary">
+
           <div class="modal-header card-header">
 
-            <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i> MODIFICAR PlAN
+            <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i> REGISTRAR PAGO
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
         </div>
 
         <div class="modal-body">
-
           <div class="card-body">
 
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+            <div class="mb-3">
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-floating dropdown">
+                    <input type="text" id="label_customer" class="form-control text-uppercase"
+                      formControlName="customer" [value]="valueSelectCustomer" placeholder="Seleccionar Cliente"
+                      data-bs-toggle="dropdown" aria-expanded="false" (keyup)="onSeachDropdownValueCustomer($event)"
+                      toUppercase autocomplete="off" />
+                    <label for="label_customer"><i class="fa fa-users" aria-hidden="true"></i> Seleccionar
+                      Cliente</label>
+
+
+                    <ul class="scrollable-menu dropdown-menu" aria-labelledby="label_customer">
+                      <li class="dropdown-item" *ngFor="let item of this.searchedOptionsCustomer"
+                        style="cursor: pointer;" (click)="selectCustomer(item)">{{item.document}}</li>
+                    </ul>
+
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-floating dropdown">
+                    <input type="text" id="label_membership" class="form-control text-uppercase"
+                      formControlName="membership" [value]="valueSelectMembership" placeholder="Seleccionar Plan"
+                      data-bs-toggle="dropdown" aria-expanded="false" (keyup)="onSeachDropdownValueMembership($event)"
+                      toUppercase autocomplete="off" />
+                    <label for="label_membership"><i class="fa fa-arrow-right" aria-hidden="true"></i> Seleccionar
+                      Plan</label>
+
+                    <ul class="scrollable-menu dropdown-menu" aria-labelledby="label_membership">
+                      <li class="dropdown-item" *ngFor="let item of this.searchedOptionsMembership"
+                        style="cursor: pointer;" (click)="selectMembership(item)">{{item.type_membership}}</li>
+                    </ul>
+
+                  </div>
+                </div>
               </div>
-              <input type="text" class="form-control text-uppercase" formControlName="type_membership"
-                placeholder="Nombre del plan" required toUppercase>
+
 
             </div>
 
             <div class="row">
-              <div class="col-5">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
-                  </div>
-                  <input type="number" placeholder="Valor del plan" formControlName="price"
-                    class="form-control text-uppercase">
-
+              <div class="col-4">
+                <div class="form-floating mb-3">
+                  <input type="text" id="float_amount" placeholder="Valor a Pagar" formControlName="amount_show"
+                    class="form-control text-uppercase" readonly>
+                  <label for="float_amount"><i class="fa fa-circle" aria-hidden="true"></i> Valor a Pagar</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="hidden" id="float_amount" placeholder="Valor a Pagar" formControlName="amount"
+                    class="form-control text-uppercase" readonly>
                 </div>
 
               </div>
               <div class="col-4">
-                <select class="form-select text-uppercase" formControlName="code_plan"
-                  aria-label="Default select example">
-                  <option value="" disabled selected>Tipo de mensualidad</option>
-                  <option value="5">Clase Gratis</option>
-                  <option value="4">Clase</option>
-                  <option value="1">Mensual</option>
-                  <option value="2">Trimestral</option>
-                  <option value="3">Anual</option>
-                </select>
-              </div>
-              <div class="col-3">
-
-                <div class="form-check">
-                  <input class="form-check-input" formControlName="state" type="checkbox" id="flexCheckChecked" checked>
-                  <label class="form-check-label text-uppercase" for="flexCheckChecked">
-                    Estado del Plan
-                  </label>
+                <div class="form-floating mb-3">
+                  <input type="text" id="float_payment_method" placeholder="Metodo de pago"
+                    formControlName="payment_method" class="form-control text-uppercase">
+                  <label for="float_payment_method"><i class="fa fa-credit-card" aria-hidden="true"></i> Metodo de
+                    pago</label>
                 </div>
-
-
-
               </div>
+
+              <div class="col-4">
+                <div class="form-floating mb-3">
+                  <input type="date" id="float_paid_date" class="form-control text-uppercase"
+                    formControlName="paid_date" required>
+                  <label for="float_paid_date"><i class="fa fa-calendar" aria-hidden="true"></i> Fecha de pago</label>
+                </div>
+              </div>
+
+
             </div>
 
 
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Guardar
-            Payment</button>
         </div>
       </div>
     </div>
   </div>
-</form> -->
+</form>

@@ -3,10 +3,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { PaymentService } from '../payment.service';
 import { Payment } from 'src/app/interfaces/Paymen';
 import Swal from 'sweetalert2';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe, formatCurrency } from '@angular/common';
 import { CustomersService } from 'src/app/customers/customers.service';
 import { Customer } from 'src/app/interfaces/Customer';
 import { lastValueFrom } from 'rxjs';
+import { MembershipService } from 'src/app/memberships/membership.service';
+import { Membership } from 'src/app/interfaces/Membership';
 
 @Component({
   selector: 'app-payment-form',
@@ -19,12 +21,15 @@ export class PaymentFormComponent {
 
   formPayment: FormGroup;
 
-  options = ['OPTION1', 'OPTION2', 'OPTION3'];
   searchedOptionsCustomer:Customer[] = [];
   listTotalCustomer:Customer[] = [];
   valueSelectCustomer:string = '';
 
-  constructor(private fb: FormBuilder, private payment_service: PaymentService, private customer_service:CustomersService) {
+  listTotalMembership:Membership[] = [];
+  searchedOptionsMembership:Membership[] = [];
+  valueSelectMembership:string = '';
+
+  constructor(private fb: FormBuilder, private payment_service: PaymentService, private customer_service:CustomersService, private membership_service:MembershipService) {
     this.formPayment = this.fb.group({});
   }
 
@@ -32,9 +37,7 @@ export class PaymentFormComponent {
     this.fromPaymentCreate();
     console.log('this.searchedOptions ',this.searchedOptionsCustomer);
     this.getCustomer();
-
-
-
+    this.getMembership();
 
   }
 
@@ -43,10 +46,12 @@ export class PaymentFormComponent {
       id: [''],
       paid_date: ['', Validators.required],
       amount: ['', Validators.required],
-      id_membership: [true, Validators.required],
-      id_customer: ['', Validators.required],
-      membership_start_date: ['', Validators.required],
-      membership_end_date: ['', Validators.required]
+      membership: ['', Validators.required],
+      customer: ['', Validators.required],
+      payment_method: ['', Validators.required],
+      amount_show:['', Validators.required],
+      membership_start_date:['',Validators.required],
+      // membership_end_date: ['', Validators.required]
     })
   }
 
@@ -54,7 +59,7 @@ export class PaymentFormComponent {
     const customers = this.customer_service.getAllCustomers();
     const data$ = await lastValueFrom(customers);
 
-    console.log('data ', data$);
+    // console.log('data ', data$);
 
 
     this.listTotalCustomer = data$;
@@ -62,7 +67,22 @@ export class PaymentFormComponent {
     this.searchedOptionsCustomer.length == 0 ? this.searchedOptionsCustomer = this.listTotalCustomer : this.searchedOptionsCustomer;
   }
 
+  public async getMembership(){
+    const memberships = this.membership_service.getAllMembership();
+    const data$ = await lastValueFrom(memberships);
+
+    // console.log('data ', data$);
+
+
+    this.listTotalMembership = data$;
+
+    this.searchedOptionsMembership.length == 0 ? this.searchedOptionsMembership = this.listTotalMembership : this.searchedOptionsMembership;
+  }
+
   public createPayment() {
+
+    console.log(this.formPayment.value);
+
 
     if (this.formPayment.valid) {
 
@@ -98,13 +118,17 @@ export class PaymentFormComponent {
 
     console.log(payment);
 
+    this.valueSelectCustomer = payment.customer.name,
+    this.valueSelectMembership = payment.membership.type_membership;
 
     this.formPayment.patchValue({
       id: payment.id,
       paid_date: payment.paid_date,
       amount: payment.amount,
-      id_membership: payment.membership.id,
-      id_customer: payment.customer.id,
+      membership: payment.membership,
+      customer: payment.customer,
+      payment_method: payment.payment_method,
+      amount_show:formatCurrency(payment.amount,'en-US','','','1.2-3'),
       membership_start_date: payment.membership_start_date,
       membership_end_date: payment.membership_end_date
     });
@@ -115,7 +139,7 @@ export class PaymentFormComponent {
 
     if (this.formPayment.valid) {
 
-      this.payment_service.updatePayment(this.formPayment.value).subscribe((response) => {
+      this.payment_service.updatePayment(this.formPayment.value as Payment).subscribe((response) => {
 
         response = JSON.parse(JSON.stringify(response));
 
@@ -133,7 +157,7 @@ export class PaymentFormComponent {
 
   }
 
-  onSeachDropdownValue($event:any) {
+  onSeachDropdownValueCustomer($event:any) {
     const value = $event.target.value.toUpperCase();
     // console.log(value);
 
@@ -143,10 +167,50 @@ export class PaymentFormComponent {
 
   }
 
-  selectCustomer(item:Customer){
-    console.log('item',item);
+  onSeachDropdownValueMembership($event:any) {
+    const value = $event.target.value.toUpperCase();
+    // console.log(value);
 
+    this.searchedOptionsMembership= this.listTotalMembership.filter(option => option.type_membership.includes(value));
+
+    // console.log('this.searchedOptions ',this.searchedOptions);
+
+  }
+
+  selectCustomer(item:Customer){
+    // console.log('item',item.id);
+
+    this.formPayment.patchValue({
+      customer:item
+    })
     this.valueSelectCustomer = item.name;
+
+  }
+
+  selectMembership(item:Membership){
+
+    if (item.code_plan == 5) {
+      this.formPayment.patchValue({
+        membership:item,
+        amount: 0,
+        payment_method: 'NO APLICA'
+
+      })
+    } else{
+
+      this.formPayment.patchValue({
+        membership:item,
+        amount_show:formatCurrency(item.price,'en-US','','','1.2-3'),
+        amount: item.price
+      })
+    }
+    // console.log('item',item.id);
+
+    this.formPayment.patchValue({
+      membership:item
+    })
+
+    this.valueSelectMembership = item.type_membership;
 
   }
 
@@ -154,5 +218,6 @@ export class PaymentFormComponent {
     console.log(option);
 
   }
+
 
 }

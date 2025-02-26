@@ -17,7 +17,7 @@ export class MembershipService {
 
 
   // Get membership list
-  public getMembership(): Observable<Membership[]> {
+  public getAllMembership(): Observable<Membership[]> {
     // this.headers.append('Autorization', `Bearer ${sessionStorage.getItem('token')}`)
     // this.headers.append('Access-Control-Allow-Origin', '*')
     // this.headers.append('Autorization', `Bearer ${sessionStorage.getItem('token')}`)

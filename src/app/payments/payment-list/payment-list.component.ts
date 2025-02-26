@@ -33,10 +33,10 @@ export class PaymentListComponent {
       });
     }
 
-    public getPaymentById(membership: Payment) {
-      console.log(membership);
+    public getPaymentById(payment: Payment) {
+      console.log(payment);
 
-      // this.addPayment.getPaymentById(membership);
+      this.addPayment.getPaymentById(payment);
     }
 
     // public deletePayment(id: number) {

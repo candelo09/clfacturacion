@@ -5,6 +5,7 @@ import { BehaviorSubject, catchError, map, Observable, tap, throwError } from 'r
 import { RespLogin } from '../interfaces/RespLogin';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class LoginService {
   currentUserLoginOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   currentUserData: BehaviorSubject<String> = new BehaviorSubject<String>("");
 
-  private routeLogin = 'http://localhost:8081/api/auth/';
+  private routeLogin = `${environment.apiUrl}api/auth/`;
 
   constructor(private http: HttpClient, private route:Router) {
     this.currentUserLoginOn = new BehaviorSubject<boolean>(sessionStorage.getItem("token") != null);

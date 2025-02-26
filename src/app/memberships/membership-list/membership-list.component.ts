@@ -50,7 +50,7 @@ export class MembershipListComponent {
 
   //Get of the memberships
   public getAllMemberships() {
-    this.membershipService.getMembership().subscribe(response => {
+    this.membershipService.getAllMembership().subscribe(response => {
       this.memberships = response
     });
   }
