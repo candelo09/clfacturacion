@@ -8,7 +8,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CategoriaListComponent } from './categoria/categoria-list/categoria-list.component';
 import { ColaboradorListComponent } from './colaborador/colaborador-list/colaborador-list.component';
 import { FormColaboradorComponent } from './colaborador/form-colaborador/form-colaborador.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormCategoriaComponent } from './categoria/form-categoria/form-categoria.component';
 import { FormProductoComponent } from './producto/form-producto/form-producto.component';
 import { ProductoListComponent } from './producto/producto-list/producto-list.component';
@@ -45,7 +45,8 @@ import { CommonModule } from '@angular/common';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   providers: [
     AuthGuard,

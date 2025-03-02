@@ -51,7 +51,8 @@ export class FormColaboradorComponent implements OnInit {
       id_membership: [''],
       telephone: [''],
       address: [''],
-      email: ['']
+      email: [''],
+      update_at: ['']
     })
 
 
@@ -76,7 +77,8 @@ export class FormColaboradorComponent implements OnInit {
       id_membership: '',
       telephone: '',
       address: '',
-      email: ''
+      email: '',
+      update_at: ''
     });
   }
 
@@ -86,7 +88,9 @@ export class FormColaboradorComponent implements OnInit {
   public createColaborador() {
 
     this.formColaborador.value.state = this.formColaborador.value.state ? 1 : 0;
-    console.log(this.formColaborador.value.state);
+
+    this.formColaborador.value.create_at = new Date();
+    // console.log(this.formColaborador.value.state);
 
     if (this.formColaborador?.valid) {
 
@@ -153,6 +157,13 @@ export class FormColaboradorComponent implements OnInit {
   // Función que obtiene el colaborador de la tabla
   getColaboradorById(user: Users) {
 
+    console.log(user.create_at);
+
+
+    // var create_at_temp = user.create_at.toString().split('T');
+
+    // console.log('create_at_temp ',create_at_temp[0]);
+
     this.imagenUser = user.image;
 
 
@@ -166,7 +177,9 @@ export class FormColaboradorComponent implements OnInit {
       email: user.email,
       role: user.role,
       telephone: user.telephone,
-      address: user.address
+      address: user.address,
+      create_at: user.create_at,
+      last_login: user.last_login
     });
 
 
@@ -174,6 +187,9 @@ export class FormColaboradorComponent implements OnInit {
 
   // Función que actualiza el colaborador
   updateColaborador() {
+    this.formColaborador.value.state = this.formColaborador.value.state ? 1 : 0;
+
+    this.formColaborador.value.update_at = new Date();
 
     if (this.formColaborador?.valid) {
 

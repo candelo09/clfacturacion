@@ -4,6 +4,7 @@ import { CustomersService } from '../customers.service';
 import Swal from 'sweetalert2';
 import { Customer } from 'src/app/interfaces/Customer';
 import { lastValueFrom, Observable } from 'rxjs';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-customers-form',
@@ -34,7 +35,7 @@ export class CustomersFormComponent implements OnInit {
       document: ['', Validators.required],
       name: ['', Validators.required],
       // image: ['',],
-      state: [1,],
+      state: ['', Validators.required],
       // cargo: ['', Validators.required],
       create_at: [''],
       phone: [''],
@@ -64,7 +65,7 @@ export class CustomersFormComponent implements OnInit {
 
     this.formCustomer.value.blood_type = this.formCustomer.value.blood_type + ' ' + this.formCustomer.value.rh
 
-    console.log(this.formCustomer.value.blood_type);
+    // console.log(this.formCustomer.value.blood_type);
 
 
     // this.customer = await this.getCustomerByDocument(this.formCustomer.value.document);
@@ -131,7 +132,7 @@ export class CustomersFormComponent implements OnInit {
 
   getCustomerById(customer:Customer){
 
-    console.log('customer ', customer);
+    // console.log('customer ', customer);
 
     var blood_type_tem = customer.blood_type.split(' ');
 
@@ -139,6 +140,7 @@ export class CustomersFormComponent implements OnInit {
 
     // console.log('blood_type_tem ', blood_type_tem[0]);
     // console.log('rhTemp ', rhTemp);
+
 
     var last_purchase_temp = customer.last_purchase.toString().split('T');
 
@@ -157,7 +159,7 @@ export class CustomersFormComponent implements OnInit {
       email: customer.email,
       blood_type: blood_type_tem[0],
       eps: customer.eps,
-      date_birth: customer.date_birth,
+      date_birth: formatDate(customer.date_birth, 'YYYY-MM-dd','en-US','GMT-5'),
       rh: rhTemp,
       last_purchase: new Date(last_purchase_temp[0]),
       update_at: new Date()
@@ -167,7 +169,11 @@ export class CustomersFormComponent implements OnInit {
 
   async updateCustomer(){
 
+    this.formCustomer.value.state = this.formCustomer.value.state ? 1 : 0;
+
     if (this.formCustomer?.valid) {
+
+      this.formCustomer.value.date_birth = formatDate(this.formCustomer.value.date_birth, 'YYYY-MM-dd','en-US','GMT-5')
 
       this.formCustomer.value.update_at = new Date();
 
@@ -230,9 +236,12 @@ export class CustomersFormComponent implements OnInit {
   formReset() {
     this.formCustomer.reset({});
 
-    this.formCustomer.patchValue({
-      rh: this.rhSelect
-    })
+    console.log('this.rhSelect ',this.rhSelect);
+
+
+    // this.formCustomer.patchValue({
+    //   rh: this.rhSelect
+    // })
   }
 
 

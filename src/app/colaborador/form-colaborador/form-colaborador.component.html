@@ -11,7 +11,7 @@
 
             <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i> REGISTRAR USUARIO</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-              (click)="formReset()"></button>
+              ></button>
           </div>
         </div>
 
@@ -266,11 +266,6 @@
                 <option value="COACH">Entrenador</option>
               </select>
             </div>
-            <div class="mb-3">
-              <label for="formFile" class="form-label">Subir foto</label>
-              <input class="form-control" type="file" #imagen (change)="updateImagenUser($event)"
-                formControlName="image">
-            </div>
             <div>
               <div class="row g-3">
                 <div class="col-lg-6">
@@ -285,16 +280,13 @@
               </div>
               <hr>
             </div>
-            <div class="input-group mb-3">
-              <img src="{{imagenUser}}" class="img-thumbnail" width="150px">
-            </div>
 
           </div>
 
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary">Modificar
-            usuario</button>
+            Usuario</button>
         </div>
       </div>
     </div>

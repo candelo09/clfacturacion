@@ -13,7 +13,10 @@ export class CustomersListComponent implements OnInit {
 
   customers: Customer[] = [];
   customerViewMore: CustomerInfoAdi = {} as CustomerInfoAdi;
+  customerHistory:Customer = {} as Customer;
   customersDataHistory: CustomerInfoAdi[] = [];
+  textFilterData:string = "";
+  existDataHistoryCustomer = false;
 
   statusPlan = false;
   showTableInfoAdi = false;
@@ -45,12 +48,14 @@ export class CustomersListComponent implements OnInit {
   public resetFormCustomer(){
 
     this.addCustomer.formReset();
-    console.log(this.addCustomer.rhSelect);
+    // console.log(this.addCustomer.rhSelect);
 
-    this.addCustomer.formCustomer.value.rh = 'Seleccione el RH';
+    // this.addCustomer.formCustomer.value.rh = 'Seleccione el RH';
   }
 
   public seeAll(customer: Customer) {
+
+    this.customerHistory = customer;
 
     this.customerService.findByDocumentAccess(customer).subscribe(resp => {
       if (resp != null) {
@@ -104,11 +109,64 @@ export class CustomersListComponent implements OnInit {
 
   }
 
-  public getCustomerByDocument(customer: CustomerInfoAdi) {
+  public getCustomerByDocument(customer: string) {
 
     this.showTableInfoAdi = true;
 
-    this.customerService.findByInfoDocument(customer).subscribe(resp => this.customersDataHistory = resp);
+    this.customerService.findByInfoDocument(customer).subscribe(resp => {
+      this.customersDataHistory = resp
+
+      if (this.customersDataHistory.length <=0) {
+        this.existDataHistoryCustomer = true;
+      }
+    });
+
+  }
+
+  filterTable($event:any){
+
+    const value = $event.target.value;
+
+    let dataFilterByUser:any = this.customers.filter(resp => resp.document.includes(value) || resp.name.includes(value)
+    );
+
+    console.log('dataFilterByUser ',dataFilterByUser);
+
+    if (value == "") {
+      dataFilterByUser = this.getAllUsers();
+    }
+
+    if (dataFilterByUser.length > 0 || value != "") {
+      this.customers = dataFilterByUser;
+    } else{
+      this.getAllUsers();
+    }
+
+    // console.log(dataFilterByUser);
+
+
+  }
+
+  filterTableBtnSearch(){
+
+
+    let dataFilterByUser:any = this.customers.filter(resp => resp.document.includes(this.textFilterData) || resp.name.includes(this.textFilterData)
+    );
+
+    console.log('dataFilterByUser ',dataFilterByUser);
+
+    if (this.textFilterData == "") {
+      dataFilterByUser = this.getAllUsers();
+    }
+
+    if (dataFilterByUser.length > 0 || this.textFilterData != "") {
+      this.customers = dataFilterByUser;
+    } else{
+      this.getAllUsers();
+    }
+
+    // console.log(dataFilterByUser);
+
 
   }
 

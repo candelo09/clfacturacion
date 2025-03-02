@@ -38,9 +38,9 @@ export class CustomersService {
       return this.http.get<CustomerInfoAdi>(`${this.routerCustomer}access/${bodyCustomer.document}`);
     }
 
-    public findByInfoDocument(bodyCustomer: CustomerInfoAdi): Observable<CustomerInfoAdi[]>{
+    public findByInfoDocument(document: string): Observable<CustomerInfoAdi[]>{
 
-      return this.http.get<CustomerInfoAdi[]>(`${this.routerCustomer}info/${bodyCustomer.document}`);
+      return this.http.get<CustomerInfoAdi[]>(`${this.routerCustomer}info/${document}`);
     }
 
     public findByDocument(customer: string): Observable<Customer>{

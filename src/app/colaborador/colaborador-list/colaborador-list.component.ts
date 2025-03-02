@@ -12,6 +12,7 @@ import { FormColaboradorComponent } from '../form-colaborador/form-colaborador.c
 export class ColaboradorListComponent implements OnInit{
 
   users:Users[] = [];
+  textFilterData:string = "";
 
   // colaboradorUpdate:Colaborador = {} as Colaborador ;
 
@@ -78,6 +79,53 @@ export class ColaboradorListComponent implements OnInit{
 
 
     })
+
+  }
+
+  filterTable($event:any){
+
+    const value = $event.target.value;
+
+    let dataFilterByUser:any = this.users.filter(resp => resp.id_document.includes(value) || resp.name.includes(value)
+    );
+
+    console.log('dataFilterByUser ',dataFilterByUser);
+
+    if (value == "") {
+      dataFilterByUser = this.getAllUsers();
+    }
+
+    if (dataFilterByUser.length > 0 || value != "") {
+      this.users = dataFilterByUser;
+    } else{
+      this.getAllUsers();
+    }
+
+    // console.log(dataFilterByUser);
+
+
+  }
+
+  filterTableBtnSearch(){
+
+
+    let dataFilterByUser:any = this.users.filter(resp => resp.id_document.includes(this.textFilterData) || resp.name.includes(this.textFilterData)
+    );
+
+    console.log('dataFilterByUser ',dataFilterByUser);
+
+    if (this.textFilterData == "") {
+      dataFilterByUser = this.getAllUsers();
+    }
+
+    if (dataFilterByUser.length > 0 || this.textFilterData != "") {
+      this.users = dataFilterByUser;
+    } else{
+      this.getAllUsers();
+    }
+
+    // console.log(dataFilterByUser);
+
 
   }
 

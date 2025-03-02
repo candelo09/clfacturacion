@@ -28,7 +28,7 @@ export class PaymentListComponent {
 
     //Get of the payments
     public getAllPayments() {
-      this.membershipService.getPayment().subscribe(response => {
+      this.membershipService.getAllPayment().subscribe(response => {
         this.payments = response
       });
     }

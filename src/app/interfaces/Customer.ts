@@ -12,11 +12,12 @@ export interface Customer {
   update_at:     Date;
   blood_type:    string;
   eps:           string;
+  state:         number;
 }
 
 export interface CustomerInfoAdi {
   id:                    number;
-  document:           string;
+  document:              string;
   name:                  string;
   paid_date:             Date;
   amount:                number;

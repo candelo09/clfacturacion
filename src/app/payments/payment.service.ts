@@ -17,7 +17,7 @@ export class PaymentService {
 
 
   // Get membership list
-  public getPayment(): Observable<Payment[]> {
+  public getAllPayment(): Observable<Payment[]> {
     // this.headers.append('Autorization', `Bearer ${sessionStorage.getItem('token')}`)
     // this.headers.append('Access-Control-Allow-Origin', '*')
     // this.headers.append('Autorization', `Bearer ${sessionStorage.getItem('token')}`)
