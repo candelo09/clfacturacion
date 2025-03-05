@@ -9,120 +9,271 @@
           <div class="modal-header card-header">
 
             <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user"></i> REGISTRAR CLIENTE</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-              ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
         </div>
 
         <div class="modal-body">
           <div class="card-body">
 
-            <div class="row g-3">
-              <div class="col-lg-6">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+            <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-customer-tab" data-bs-toggle="tab"
+                  data-bs-target="#nav-customer" type="button" role="tab" aria-controls="nav-customer"
+                  aria-selected="true">Cliente</button>
+                <button class="nav-link" id="nav-progress-tab" data-bs-toggle="tab" data-bs-target="#nav-progress"
+                  type="button" role="tab" aria-controls="nav-progress" aria-selected="false">Progreso Físico</button>
+              </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+              <!-- // TAB CUSTOMER -->
+
+              <div class="tab-pane fade show active" id="nav-customer" role="tabpanel"
+                aria-labelledby="nav-customer-tab">
+                <hr>
+                <div class="row g-3">
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+                      </div>
+                      <input type="text" class="form-control " formControlName="document" placeholder="No. documento"
+                        required>
+                    </div>
                   </div>
-                  <input  type="text" class="form-control " formControlName="document" placeholder="No. documento"
-                    required>
+
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-file-signature"></i></span>
+                      </div>
+                      <input type="text" class="form-control" formControlName="name" placeholder="Ingrese nombre"
+                        required>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row g-3">
+
+
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-birthday-cake"></i></span>
+                      </div>
+                      <input type="date" class="form-control " formControlName="date_birth" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="Fecha de nacimiento">
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                      </div>
+                      <input type="email" class="form-control" formControlName="email" placeholder="Ingrese email"
+                        required>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row g-3">
+                  <div class="col-lg-3">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                      </div>
+                      <input type="text" class="form-control" formControlName="blood_type"
+                        placeholder="Ingrese el tipo de sangre">
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <select class="form-select" formControlName="rh">
+                      <option value="" disabled selected>Seleccione el RH</option>
+                      <option *ngFor="let rhS of rhSelect">
+                        {{rhS}}</option>
+
+                    </select>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                      </div>
+                      <input type="text" class="form-control" formControlName="eps" placeholder="Ingrese la eps">
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row g-3">
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                      </div>
+                      <input type="number" class="form-control" formControlName="phone" placeholder="No. contacto"
+                        required>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-street-view"></i></span>
+                      </div>
+                      <input type="text" class="form-control" formControlName="address" placeholder="Ingrese dirección" required>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row g-3">
+                  <div class="col-lg-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" formControlName="state" id="flexCheckChecked"
+                        checked>
+                      <label class="form-check-label" for="flexCheckChecked">
+                        Estado Cliente
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="nav-progress" role="tabpanel" aria-labelledby="nav-progress-tab">
+                <!-- //TAB PHYSICAL PROGRESS -->
+                <hr>
+                <div class="row g-3">
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+                      </div>
+                      <input type="number" class="form-control " formControlName="stature"
+                        placeholder="Ingrese la altura en CM">
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-file-signature"></i></span>
+                      </div>
+                      <input type="number" class="form-control" formControlName="weight"
+                        placeholder="Ingrese el peso en KG">
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row g-3">
+
+
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="form-floating mb-3">
+                        <input type="number" class="form-control" formControlName="body_fat" id="floatingbody_fat"
+                          placeholder="IMC" readonly>
+                        <label for="floatingbody_fat">IMC</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="form-floating mb-3">
+                        <input type="number" class="form-control" formControlName="musculature" id="floatingmusculature"
+                          placeholder="Porcentaje muscular" readonly>
+                        <label for="floatingmusculature">% Muscular</label>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row g-3">
+                  <div class="col-4">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                      </div>
+                      <input type="number" class="form-control" formControlName="calf_circumference"
+                        placeholder="Circunferencia Pantorrilla">
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                      </div>
+                      <input type="number" class="form-control" formControlName="belt_circumference"
+                        placeholder="Circunferencia Cintura">
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-street-view"></i></span>
+                      </div>
+                      <input type="text" class="form-control" formControlName="hip_circumference"
+                        placeholder="Circunferencia Cadera">
+                    </div>
+                  </div>
+
+                </div>
+
+
+                <div class="row g-3">
+
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                      </div>
+                      <input type="number" class="form-control" formControlName="average_arm_muscle_circumference"
+                        placeholder="Circurferencia Media del Brazo">
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                      </div>
+                      <input type="number" class="form-control" formControlName="thigh_circumference"
+                        placeholder="Circunferencia Muslo">
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row g-3">
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                      </div>
+                      <input type="number" class="form-control" formControlName="relaxed_arm_circumference"
+                        placeholder="Circunferencia Brazo Relajado">
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                      </div>
+                      <input type="number" class="form-control" formControlName="circumference_contracted_arm"
+                        placeholder="Circunferencia Brazo Contraído">
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div class="col-lg-6">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-file-signature"></i></span>
-                  </div>
-                  <input  type="text" class="form-control" formControlName="name" placeholder="Ingrese nombre" required>
-                </div>
-              </div>
             </div>
 
 
-            <div class="row g-3">
-
-
-              <div class="col-lg-6">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fa fa-birthday-cake"></i></span>
-                  </div>
-                  <input type="date" class="form-control " formControlName="date_birth" data-bs-toggle="tooltip"
-                    data-bs-placement="top" title="Fecha de nacimiento">
-                </div>
-              </div>
-
-              <div class="col-lg-6">
-                <div class="input-group mb-3">
-                  <div class="input-group-append">
-                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                  </div>
-                  <input type="email" class="form-control" formControlName="email" placeholder="Ingrese email" required>
-                </div>
-              </div>
-
-            </div>
-
-            <div class="row g-3">
-              <div class="col-lg-3">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
-                  </div>
-                  <input  type="text" class="form-control" formControlName="blood_type"
-                    placeholder="Ingrese el tipo de sangre" required>
-                </div>
-              </div>
-              <div class="col-3">
-                <select class="form-select"  formControlName="rh">
-                  <option value="" disabled selected>Seleccione el RH</option>
-                  <option *ngFor="let rhS of rhSelect">
-                    {{rhS}}</option>
-
-                </select>
-              </div>
-              <div class="col-lg-6">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-key"></i></span>
-                  </div>
-                  <input type="text" class="form-control" formControlName="eps" placeholder="Ingrese la eps">
-                </div>
-              </div>
-            </div>
-
-
-            <div class="row g-3">
-              <div class="col-lg-6">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                  </div>
-                  <input type="number" class="form-control" formControlName="phone" placeholder="No. contacto"
-                    required>
-                </div>
-              </div>
-
-              <div class="col-lg-6">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-street-view"></i></span>
-                  </div>
-                  <input type="text" class="form-control" formControlName="address" placeholder="Ingrese dirección">
-                </div>
-              </div>
-            </div>
-
-            <div class="row g-3">
-              <div class="col-lg-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" formControlName="state" id="flexCheckChecked" checked>
-                  <label class="form-check-label" for="flexCheckChecked">
-                    Estado Cliente
-                  </label>
-                </div>
-              </div>
-            </div>
 
           </div>
 
@@ -158,111 +309,262 @@
         <div class="modal-body">
           <div class="card-body">
 
-            <div class="row g-3">
-              <div class="col-lg-6">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+            <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-customer-edit-tab" data-bs-toggle="tab"
+                  data-bs-target="#nav-customer-edit" type="button" role="tab" aria-controls="nav-customer-edit"
+                  aria-selected="true">Cliente</button>
+                <button class="nav-link" id="nav-progress-edit-tab" data-bs-toggle="tab" data-bs-target="#nav-progress-edit"
+                  type="button" role="tab" aria-controls="nav-progress-edit" aria-selected="false">Progreso Físico</button>
+              </div>
+            </nav>
+
+            <div class="tab-content" id="nav-tabContent">
+              <!-- // TAB CUSTOMER -->
+
+              <div class="tab-pane fade show active" id="nav-customer-edit" role="tabpanel"
+                aria-labelledby="nav-customer-tab">
+                <hr>
+                <div class="row g-3">
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+                      </div>
+                      <input type="text" class="form-control " formControlName="document" placeholder="No. documento"
+                        required>
+                    </div>
                   </div>
-                  <input  type="text" class="form-control " formControlName="document" placeholder="No. documento"
-                    required>
-                </div>
-              </div>
 
-              <div class="col-lg-6">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-file-signature"></i></span>
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-file-signature"></i></span>
+                      </div>
+                      <input type="text" class="form-control" formControlName="name" placeholder="Ingrese nombre"
+                        required>
+                    </div>
                   </div>
-                  <input type="text" class="form-control" formControlName="name" placeholder="Ingrese nombre" required>
                 </div>
-              </div>
-            </div>
 
 
-            <div class="row g-3">
+                <div class="row g-3">
 
 
-              <div class="col-lg-6">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fa fa-birthday-cake"></i></span>
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-birthday-cake"></i></span>
+                      </div>
+                      <input type="date" class="form-control " formControlName="date_birth" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="Fecha de nacimiento">
+                    </div>
                   </div>
-                  <input type="date" class="form-control" formControlName="date_birth" data-bs-toggle="tooltip"
-                    data-bs-placement="top" title="Fecha de nacimiento">
-                </div>
-              </div>
 
-              <div class="col-lg-6">
-                <div class="input-group mb-3">
-                  <div class="input-group-append">
-                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                      </div>
+                      <input type="email" class="form-control" formControlName="email" placeholder="Ingrese email"
+                        required>
+                    </div>
                   </div>
-                  <input type="email" class="form-control" formControlName="email" placeholder="Ingrese email" required>
+
                 </div>
-              </div>
 
-            </div>
-
-            <div class="row g-3">
-              <div class="col-lg-3">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                <div class="row g-3">
+                  <div class="col-lg-3">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                      </div>
+                      <input type="text" class="form-control" formControlName="blood_type"
+                        placeholder="Ingrese el tipo de sangre">
+                    </div>
                   </div>
-                  <input type="text" class="form-control" formControlName="blood_type"
-                    placeholder="Ingrese el tipo de sangre" required>
-                </div>
-              </div>
-              <div class="col-3">
-                <select class="form-select"  formControlName="rh">
-                  <option selected>Seleccione el RH</option>
-                  <option *ngFor="let rhS of rhSelect">
-                    {{rhS}}</option>
+                  <div class="col-3">
+                    <select class="form-select" formControlName="rh">
+                      <option value="" disabled selected>Seleccione el RH</option>
+                      <option *ngFor="let rhS of rhSelect">
+                        {{rhS}}</option>
 
-                </select>
-              </div>
-              <div class="col-lg-6">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </select>
                   </div>
-                  <input type="text" class="form-control" formControlName="eps" placeholder="Ingrese la eps">
-                </div>
-              </div>
-            </div>
-
-
-            <div class="row g-3">
-              <div class="col-lg-6">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                      </div>
+                      <input type="text" class="form-control" formControlName="eps" placeholder="Ingrese la eps">
+                    </div>
                   </div>
-                  <input type="number" class="form-control" formControlName="phone" placeholder="No. contacto"
-                    required>
                 </div>
-              </div>
 
-              <div class="col-lg-6">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-street-view"></i></span>
+
+                <div class="row g-3">
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                      </div>
+                      <input type="number" class="form-control" formControlName="phone" placeholder="No. contacto"
+                        required>
+                    </div>
                   </div>
-                  <input type="text" class="form-control" formControlName="address" placeholder="Ingrese dirección">
-                </div>
-              </div>
-            </div>
 
-            <div class="row g-3">
-              <div class="col-lg-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" formControlName="state" id="flexCheckChecked" checked>
-                  <label class="form-check-label" for="flexCheckChecked">
-                    Estado Cliente
-                  </label>
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-street-view"></i></span>
+                      </div>
+                      <input type="text" class="form-control" formControlName="address" placeholder="Ingrese dirección" required>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row g-3">
+                  <div class="col-lg-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" formControlName="state" id="flexCheckChecked"
+                        checked>
+                      <label class="form-check-label" for="flexCheckChecked">
+                        Estado Cliente
+                      </label>
+                    </div>
+                  </div>
                 </div>
               </div>
+              <div class="tab-pane fade" id="nav-progress-edit" role="tabpanel" aria-labelledby="nav-progress-edit-tab">
+                <!-- //TAB PHYSICAL PROGRESS -->
+                <hr>
+                <div class="row g-3">
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+                      </div>
+                      <input type="number" class="form-control " formControlName="stature"
+                        placeholder="Ingrese la altura en CM">
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-file-signature"></i></span>
+                      </div>
+                      <input type="number" class="form-control" formControlName="weight"
+                        placeholder="Ingrese el peso en KG">
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row g-3">
+
+
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="form-floating mb-3">
+                        <input type="number" class="form-control" formControlName="body_fat" id="floatingbody_fat"
+                          placeholder="IMC" readonly>
+                        <label for="floatingbody_fat">IMC</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="form-floating mb-3">
+                        <input type="number" class="form-control" formControlName="musculature" id="floatingmusculature"
+                          placeholder="Porcentaje muscular" readonly>
+                        <label for="floatingmusculature">% Muscular</label>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row g-3">
+                  <div class="col-4">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                      </div>
+                      <input type="number" class="form-control" formControlName="calf_circumference"
+                        placeholder="Circunferencia Pantorrilla">
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                      </div>
+                      <input type="number" class="form-control" formControlName="belt_circumference"
+                        placeholder="Circunferencia Cintura">
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-street-view"></i></span>
+                      </div>
+                      <input type="text" class="form-control" formControlName="hip_circumference"
+                        placeholder="Circunferencia Cadera">
+                    </div>
+                  </div>
+
+                </div>
+
+
+                <div class="row g-3">
+
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                      </div>
+                      <input type="number" class="form-control" formControlName="average_arm_muscle_circumference"
+                        placeholder="Circurferencia Media del Brazo">
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                      </div>
+                      <input type="number" class="form-control" formControlName="thigh_circumference"
+                        placeholder="Circunferencia Muslo">
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row g-3">
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                      </div>
+                      <input type="number" class="form-control" formControlName="relaxed_arm_circumference"
+                        placeholder="Circunferencia Brazo Relajado">
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                      </div>
+                      <input type="number" class="form-control" formControlName="circumference_contracted_arm"
+                        placeholder="Circunferencia Brazo Contraído">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
           </div>
@@ -277,4 +579,3 @@
     </div>
   </div>
 </form>
-

@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { Customer } from 'src/app/interfaces/Customer';
 import { lastValueFrom, Observable } from 'rxjs';
 import { formatDate } from '@angular/common';
+import { PhysicalProgress } from 'src/app/interfaces/PhysicalProgress';
 
 @Component({
   selector: 'app-customers-form',
@@ -14,6 +15,7 @@ import { formatDate } from '@angular/common';
 export class CustomersFormComponent implements OnInit {
 
   formCustomer: FormGroup;
+  // formPhysicalProgress: FormGroup;
 
   customer: Customer = {} as Customer;
 
@@ -21,10 +23,12 @@ export class CustomersFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private customerService: CustomersService) {
     this.formCustomer = this.fb.group({});
+    // this.formPhysicalProgress = this.fb.group({});
   }
 
   ngOnInit(): void {
-    this.form_customer()
+    this.form_customer();
+    // this.form_physicalProgress();
   }
 
 
@@ -35,7 +39,7 @@ export class CustomersFormComponent implements OnInit {
       document: ['', Validators.required],
       name: ['', Validators.required],
       // image: ['',],
-      state: ['', Validators.required],
+      state: [1, Validators.required],
       // cargo: ['', Validators.required],
       create_at: [''],
       phone: [''],
@@ -46,10 +50,42 @@ export class CustomersFormComponent implements OnInit {
       date_birth: [],
       rh: [],
       last_purchase:[''],
-      update_at: ['']
+      update_at: [''],
+      stature:[0],
+      weight:[0],
+      body_fat: [0],
+      musculature: [0],
+      calf_circumference: [0],
+      average_arm_muscle_circumference: [0],
+      belt_circumference: [0],
+      hip_circumference: [0],
+      thigh_circumference: [0],
+      relaxed_arm_circumference: [0],
+      circumference_contracted_arm: [0]
+
     })
 
   }
+
+  // form_physicalProgress(){
+
+  //   this.formPhysicalProgress = this.fb.group({
+  //     id: [''],
+  //     stature:[''],
+  //     weight:[''],
+  //     body_fat: [''],
+  //     musculature: [''],
+  //     calf_circumference: [''],
+  //     average_arm_muscle_circumference: [''],
+  //     belt_circumference: [''],
+  //     hip_circumference: [''],
+  //     thigh_circumference: [''],
+  //     relaxed_arm_circumference: [''],
+  //     circumference_contracted_arm: ['']
+
+  //   })
+
+  // }
 
   async getCustomerByDocument(document: string) {
 
@@ -65,7 +101,7 @@ export class CustomersFormComponent implements OnInit {
 
     this.formCustomer.value.blood_type = this.formCustomer.value.blood_type + ' ' + this.formCustomer.value.rh
 
-    // console.log(this.formCustomer.value.blood_type);
+    console.log(this.formCustomer.value);
 
 
     // this.customer = await this.getCustomerByDocument(this.formCustomer.value.document);
@@ -80,7 +116,7 @@ export class CustomersFormComponent implements OnInit {
 
       // Registra en bd el nuevo colaborador
       // this.formCustomer.value.image = this.imagenUser;
-      return await lastValueFrom(this.customerService.addCustomer(this.formCustomer.value as Customer)).then(async () => {
+      return await lastValueFrom(this.customerService.addCustomer(this.formCustomer.value as Customer)).then(async (respCustomer) => {
 
         Swal.fire({
           position: 'top-end',
@@ -89,7 +125,8 @@ export class CustomersFormComponent implements OnInit {
           showConfirmButton: false,
           timer: 3000,
         }).then((resp) =>{
-            window.location.reload();
+          this.createPhyisicalProgress(this.formCustomer.value, respCustomer)
+            // window.location.reload();
         })
 
 
@@ -128,6 +165,48 @@ export class CustomersFormComponent implements OnInit {
         timer: 3000
       })
     }
+  }
+
+  public async createPhyisicalProgress(bodyPhysicalProgress:any, customer:Customer){
+    console.log('customer ', customer);
+
+    const customer_temp:Customer = {
+      id: 0,
+      name: customer.name,
+      document:customer.document,
+      email: customer.email,
+      phone: customer.phone,
+      address: customer.address,
+      date_birth: customer.date_birth,
+      purchases: 0,
+      last_purchase: new Date(),
+      create_at: customer.create_at,
+      update_at: customer.update_at,
+      blood_type: customer.blood_type,
+      eps: customer.eps,
+      state: customer.state
+    }
+
+
+    const bodyPhysicalProgress_temp:PhysicalProgress = {
+      id_user: null,
+      weight: bodyPhysicalProgress.weight,
+      body_fat: bodyPhysicalProgress.body_fat,
+      musculature: bodyPhysicalProgress.musculature,
+      id_customer: customer,
+      stature: bodyPhysicalProgress.stature,
+      calf_circumference: bodyPhysicalProgress.calf_circumference,
+      average_arm_muscle_circumference: bodyPhysicalProgress.average_arm_muscle_circumference,
+      belt_circumference: bodyPhysicalProgress.belt_circumference,
+      hip_circumference: bodyPhysicalProgress.hip_circumference,
+      thigh_circumference: bodyPhysicalProgress.thigh_circumference,
+      relaxed_arm_circumference: bodyPhysicalProgress.relaxed_arm_circumference,
+      circumference_contracted_arm: bodyPhysicalProgress.circumference_contracted_arm
+    }
+
+
+    return await lastValueFrom(this.customerService.addPhysicalProgress(bodyPhysicalProgress_temp));
+
   }
 
   getCustomerById(customer:Customer){

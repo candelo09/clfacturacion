@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Customer, CustomerInfoAdi } from '../interfaces/Customer';
 import { Observable } from 'rxjs';
+import { PhysicalProgress } from '../interfaces/PhysicalProgress';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import { Observable } from 'rxjs';
 export class CustomersService {
 
     private routerCustomer = `${environment.apiUrl}customers/`;
+    private routerCustomerProgress = `${environment.apiUrl}phyisical/progress/`
 
     constructor(private http: HttpClient) { }
 
@@ -22,9 +24,9 @@ export class CustomersService {
     }
 
     //Agregar Customer
-    public addCustomer(bodyCustomer: Customer) {
+    public addCustomer(bodyCustomer: Customer):Observable<Customer> {
 
-      return this.http.post(`${this.routerCustomer}save`, bodyCustomer);
+      return this.http.post<Customer>(`${this.routerCustomer}save`, bodyCustomer);
     }
 
     //Actualizar Customer
@@ -76,4 +78,17 @@ export class CustomersService {
 
       return this.http.post(`${this.routerCustomer}upload`,  resource, {params:params})
     }
+
+
+    // SERVICES PHYISICAL PROGRESS OPTIONAL
+
+    public getAllPhysicalProgress():Observable<PhysicalProgress[]>{
+
+      return this.http.get<PhysicalProgress[]>(`${this.routerCustomerProgress}all`)
+    }
+
+    public addPhysicalProgress(bodyPhysicalProgress:PhysicalProgress){
+      return this.http.post(`${this.routerCustomerProgress}save`, bodyPhysicalProgress);
+    }
+
 }
