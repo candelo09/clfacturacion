@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <div class="preloader flex-column justify-content-center align-items-center" *ngIf="this.userLoginOn">
+  <div class="preloader flex-column justify-content-center align-items-center" *ngIf="userLoginOn">
     <img class="animation__shake" src="assets/logos/iconoCL.png" alt="AdminLTELogo" height="60" width="60">
   </div>
 
@@ -23,7 +23,7 @@
              <!-- <img src="../../assets/img/iconoLoginDefault.png" width="40" height="40"> -->
             <!-- <span class="badge badge-danger navbar-badge">ADMIN</span> -->
           </a>
-          <div style="cursor: pointer;" class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <a class="nav-link" (click)=logout() role="button">SALIR <i class="fas fa-sign-out-alt"></i></a>
             <div class="dropdown-divider"></div>
 
@@ -44,16 +44,14 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
     <a href="main/home" class="brand-link">
-      <img src="assets/logos/iconoCL.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-        style="opacity: .8">
+      <img src="assets/logos/iconoCL.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">SYSTEM WEB</span>
     </a>
 
     <div class="sidebar">
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
-          <li class="nav-item menu-open">
+          <li class="nav-item">
             <a href="main/home" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
@@ -61,7 +59,6 @@
               </p>
             </a>
           </li>
-
           <li class="nav-item">
             <a href="main/colaborador" class="nav-link">
               <i class="nav-icon fas fa-solid fa-user"></i>
@@ -99,7 +96,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link pe-auto">
+            <a class="nav-link pe-auto">
               <i class="nav-icon fa fa-user-circle"></i>
               <p>
                 Planes

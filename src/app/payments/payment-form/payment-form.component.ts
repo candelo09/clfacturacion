@@ -9,11 +9,13 @@ import { Customer } from 'src/app/interfaces/Customer';
 import { lastValueFrom } from 'rxjs';
 import { MembershipService } from 'src/app/memberships/membership.service';
 import { Membership } from 'src/app/interfaces/Membership';
+import { PaymentPdfComponent } from '../payment-pdf/payment-pdf.component';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-payment-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, PaymentPdfComponent],
   templateUrl: './payment-form.component.html',
   styleUrl: './payment-form.component.css'
 })
@@ -28,6 +30,8 @@ export class PaymentFormComponent {
   listTotalMembership:Membership[] = [];
   searchedOptionsMembership:Membership[] = [];
   valueSelectMembership:string = '';
+
+  pdfSrc: any;
 
   constructor(private fb: FormBuilder, private payment_service: PaymentService, private customer_service:CustomersService, private membership_service:MembershipService) {
     this.formPayment = this.fb.group({});
@@ -82,11 +86,7 @@ export class PaymentFormComponent {
   public createPayment() {
 
     console.log(this.formPayment.value);
-
-
     if (this.formPayment.valid) {
-
-
 
       this.payment_service.createPayment(this.formPayment.value as Payment).subscribe(() => {
 
@@ -97,6 +97,8 @@ export class PaymentFormComponent {
           timer: 2000
 
         }).then((result) => {
+          this.pdfSrc = this.payment_service.generatePdf(this.formPayment.value as Payment);
+          window.open(this.pdfSrc, '_blank');
           window.location.reload();
         });
 

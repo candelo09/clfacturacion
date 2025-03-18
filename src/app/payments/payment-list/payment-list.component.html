@@ -72,6 +72,11 @@
                           data-bs-target="#modalUpdatePayment"><i class="fas fa-thin fa-pen"></i>
                         </button>
                       </div>
+                      <div class="col-4">
+                        <button class="btn btn-primary" (click)="generatePdf(payment)" data-bs-toggle="modal"
+                          data-bs-target="#pdfModal"><i class="fas fa-thin fa-print"></i>
+                        </button>
+                      </div>
 
                       <!-- <div class="col-4">
                         <button class="btn btn-danger" (click)="deletePayment(payment.id)"><i
@@ -93,5 +98,6 @@
   </div>
 </section>
 
+<app-payment-pdf [pdfSrc]="pdfSrc"></app-payment-pdf>
 <app-payment-form></app-payment-form>
 
