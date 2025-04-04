@@ -60,18 +60,20 @@
                   <td>{{payment.customer.name}}</td>
                   <td>{{payment.paid_date | date: 'dd-MM-yyyy : hh:mm': 'UTC-5'}}</td>
                   <!-- <td>{{payment.code_plan}}</td> -->
-                  <td >{{payment.payment_method}}</td>
-                  <td >{{payment.membership_start_date | date: 'dd-MM-yyyy : hh:mm': 'UTC-5'}}</td>
+                  <td>{{payment.payment_method}}</td>
+                  <td>{{payment.membership_start_date | date: 'dd-MM-yyyy : hh:mm': 'UTC-5'}}</td>
                   <td>{{payment.membership_end_date | date: 'dd-MM-yyyy : hh:mm': 'UTC-5'}}</td>
                   <td>{{payment.membership.type_membership}}</td>
                   <td>{{payment.amount| currency}}</td>
                   <td>
+
                     <div class="row">
                       <div class="col-4">
                         <button class="btn btn-warning" (click)="getPaymentById(payment)" data-bs-toggle="modal"
                           data-bs-target="#modalUpdatePayment"><i class="fas fa-thin fa-pen"></i>
                         </button>
                       </div>
+                      <div class="col-4"></div>
                       <div class="col-4">
                         <button class="btn btn-primary" (click)="generatePdf(payment)" data-bs-toggle="modal"
                           data-bs-target="#pdfModal"><i class="fas fa-thin fa-print"></i>
@@ -79,10 +81,12 @@
                       </div>
 
                       <!-- <div class="col-4">
-                        <button class="btn btn-danger" (click)="deletePayment(payment.id)"><i
-                            class="fas fa-thin fa-trash"></i></button>
-                      </div> -->
+                          <button class="btn btn-danger" (click)="deletePayment(payment.id)"><i
+                              class="fas fa-thin fa-trash"></i></button>
+                        </div> -->
                     </div>
+
+
 
                   </td>
 
@@ -100,4 +104,3 @@
 
 <app-payment-pdf [pdfSrc]="pdfSrc"></app-payment-pdf>
 <app-payment-form></app-payment-form>
-

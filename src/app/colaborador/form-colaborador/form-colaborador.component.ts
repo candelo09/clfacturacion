@@ -43,7 +43,7 @@ export class FormColaboradorComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required],
       image: ['',],
-      state: [1],
+      state: [''],
       // cargo: ['', Validators.required],
       last_login: [''],
       create_at: [''],
@@ -52,7 +52,7 @@ export class FormColaboradorComponent implements OnInit {
       telephone: [''],
       address: [''],
       email: [''],
-      update_at: ['']
+      update_at: [''],
     })
 
 
@@ -164,6 +164,9 @@ export class FormColaboradorComponent implements OnInit {
 
     // console.log('create_at_temp ',create_at_temp[0]);
 
+    console.log('state ', user.state);
+
+
     this.imagenUser = user.image;
 
 
@@ -179,7 +182,8 @@ export class FormColaboradorComponent implements OnInit {
       telephone: user.telephone,
       address: user.address,
       create_at: user.create_at,
-      last_login: user.last_login
+      last_login: user.last_login,
+      state: user.state == 1 ? true : false
     });
 
 

@@ -3,6 +3,7 @@ import { CustomersService } from '../customers.service';
 import { Customer, CustomerInfoAdi } from 'src/app/interfaces/Customer';
 import { CustomersFormComponent } from '../customers-form/customers-form.component';
 import Swal from 'sweetalert2';
+import { PhysicalProgress } from 'src/app/interfaces/PhysicalProgress';
 
 @Component({
   selector: 'app-customers-list',
@@ -13,10 +14,12 @@ export class CustomersListComponent implements OnInit {
 
   customers: Customer[] = [];
   customerViewMore: CustomerInfoAdi = {} as CustomerInfoAdi;
-  customerHistory:Customer = {} as Customer;
+  customerHistory: Customer = {} as Customer;
+  customerHistoryPhysicalProgress: PhysicalProgress[] = [];
   customersDataHistory: CustomerInfoAdi[] = [];
-  textFilterData:string = "";
+  textFilterData: string = "";
   existDataHistoryCustomer = false;
+  flagLoadingMembership = false;
 
   statusPlan = false;
   showTableInfoAdi = false;
@@ -45,7 +48,7 @@ export class CustomersListComponent implements OnInit {
 
   }
 
-  public resetFormCustomer(){
+  public resetFormCustomer() {
 
     this.addCustomer.formReset();
     // console.log(this.addCustomer.rhSelect);
@@ -56,11 +59,29 @@ export class CustomersListComponent implements OnInit {
   public seeAll(customer: Customer) {
 
     this.customerHistory = customer;
-
+    this.flagLoadingMembership = true;
     this.customerService.findByDocumentAccess(customer).subscribe(resp => {
       if (resp != null) {
         this.statusPlan = true;
+        this.flagLoadingMembership = false;
         this.customerViewMore = resp
+
+
+      }else{
+        this.flagLoadingMembership = false;
+      }
+    })
+    console.log('this.customerViewMore ', this.customerViewMore.document);
+  }
+  public seeAllProggres(customer: Customer) {
+
+    this.customerHistory = customer;
+    this.flagLoadingMembership = true;
+    this.customerService.findByPhysicalProgressDocument(customer).subscribe(resp => {
+      if (resp != null) {
+        this.customerHistoryPhysicalProgress = resp;
+        this.statusPlan = true;
+        this.flagLoadingMembership = false;
       }
     })
 
@@ -69,12 +90,14 @@ export class CustomersListComponent implements OnInit {
   cleanViewMore() {
     this.statusPlan = false;
     this.showTableInfoAdi = false;
+    this.existDataHistoryCustomer = false;
 
     this.customerViewMore = {} as CustomerInfoAdi;
   }
 
-  cleanShowTableHistory(){
+  cleanShowTableHistory() {
     this.showTableInfoAdi = false;
+    this.existDataHistoryCustomer = false;
   }
 
   public deleteByIdCustomer(id: number) {
@@ -112,25 +135,26 @@ export class CustomersListComponent implements OnInit {
   public getCustomerByDocument(customer: string) {
 
     this.showTableInfoAdi = true;
-
+    // this.flagLoadingMembership = true;
     this.customerService.findByInfoDocument(customer).subscribe(resp => {
       this.customersDataHistory = resp
 
-      if (this.customersDataHistory.length <=0) {
+      if (this.customersDataHistory.length <= 0) {
         this.existDataHistoryCustomer = true;
+        // this.flagLoadingMembership = false;
       }
     });
 
   }
 
-  filterTable($event:any){
+  filterTable($event: any) {
 
     const value = $event.target.value;
 
-    let dataFilterByUser:any = this.customers.filter(resp => resp.document.includes(value) || resp.name.includes(value)
+    let dataFilterByUser: any = this.customers.filter(resp => resp.document.includes(value) || resp.name.includes(value)
     );
 
-    console.log('dataFilterByUser ',dataFilterByUser);
+    console.log('dataFilterByUser ', dataFilterByUser);
 
     if (value == "") {
       dataFilterByUser = this.getAllUsers();
@@ -138,7 +162,7 @@ export class CustomersListComponent implements OnInit {
 
     if (dataFilterByUser.length > 0 || value != "") {
       this.customers = dataFilterByUser;
-    } else{
+    } else {
       this.getAllUsers();
     }
 
@@ -147,13 +171,13 @@ export class CustomersListComponent implements OnInit {
 
   }
 
-  filterTableBtnSearch(){
+  filterTableBtnSearch() {
 
 
-    let dataFilterByUser:any = this.customers.filter(resp => resp.document.includes(this.textFilterData) || resp.name.includes(this.textFilterData)
+    let dataFilterByUser: any = this.customers.filter(resp => resp.document.includes(this.textFilterData) || resp.name.includes(this.textFilterData)
     );
 
-    console.log('dataFilterByUser ',dataFilterByUser);
+    console.log('dataFilterByUser ', dataFilterByUser);
 
     if (this.textFilterData == "") {
       dataFilterByUser = this.getAllUsers();
@@ -161,7 +185,7 @@ export class CustomersListComponent implements OnInit {
 
     if (dataFilterByUser.length > 0 || this.textFilterData != "") {
       this.customers = dataFilterByUser;
-    } else{
+    } else {
       this.getAllUsers();
     }
 

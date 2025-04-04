@@ -1,0 +1,30 @@
+.container_silhouette {
+  position: relative;
+  width: 500px;
+  margin: auto;
+}
+.silhouette {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.btn_silhouette {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #000;
+  padding: 4px 6px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+/* Posiciones de los botones */
+.neck { top: 15%; left: 51%; }
+.shoulders { top: 18%; left: 30%; }
+.chest { top: 25%; left: 46%; }
+.abdomen { top: 36%; left: 44%; }
+.waist { top: 44%; left: 54%; }
+.hips { top: 42%; left: 40%; }
+.biceps { top: 28%; left: 32%; }
+.forearm { top: 37%; left: 26%; }
+.thigh { top: 56%; left: 39%; }
+.calf { top: 74%; left: 44%; }

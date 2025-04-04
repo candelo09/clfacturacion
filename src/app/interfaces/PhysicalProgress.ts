@@ -1,19 +1,24 @@
 import { Customer } from "./Customer";
 
 export interface PhysicalProgress {
-  id_user:                          null;
-  weight:                           number;
-  body_fat:                         number;
-  musculature:                      number;
-  id_customer:                      Customer;
-  stature:                          number;
-  calf_circumference:               number;
-  average_arm_muscle_circumference: number;
-  belt_circumference:               number;
-  hip_circumference:                number;
-  thigh_circumference:              number;
-  relaxed_arm_circumference:        number;
-  circumference_contracted_arm:     number;
+  id:            number;
+  id_user:       null;
+  weight:        number;
+  body_fat:      number;
+  musculature:   number;
+  id_customer:   Customer;
+  stature:       number;
+  neck:          number;
+  shoulders:     number;
+  chest:         number;
+  abdomen:       number;
+  waist:         number;
+  hips:          number;
+  biceps:        number;
+  forearm:       number;
+  thigh:         number;
+  calf:          number;
+  progress_date: Date;
 }
 
 // export interface IDCustomer {

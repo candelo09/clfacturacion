@@ -35,6 +35,11 @@ export class CustomersService {
       return this.http.put<Customer>(`${this.routerCustomer}edit/${bodyCustomer.id}`, bodyCustomer);
     }
 
+    public findByPhysicalProgressDocument(bodyCustomer: Customer): Observable<PhysicalProgress[]>{
+
+      return this.http.get<PhysicalProgress[]>(`${this.routerCustomerProgress}findBy/customer/${bodyCustomer.id}`);
+    }
+
     public findByDocumentAccess(bodyCustomer: Customer): Observable<CustomerInfoAdi>{
 
       return this.http.get<CustomerInfoAdi>(`${this.routerCustomer}access/${bodyCustomer.document}`);

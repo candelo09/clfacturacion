@@ -53,7 +53,7 @@
                   <th>Estado</th>
                   <th>Telefono</th>
                   <th>email</th>
-                  <th>Fecha Ultimo Pago</th>
+                  <!-- <th>Fecha Ultimo Pago</th> -->
                   <th>Acciones</th>
                 </tr>
               </thead>
@@ -67,19 +67,23 @@
                   <td *ngIf="customer.state == 1" class="bg-success">ACTIVO</td>
                   <td *ngIf="customer.state == 0" class="bg-danger">INACTIVO</td>
                   <td>{{customer.phone}}</td>
-                  <td>{{customer.email}}</td>
-                  <td>{{customer.last_purchase| date: 'dd-MM-yyyy': 'UTC-5'}}</td>
+                  <td>{{customer.email | lowercase}}</td>
+                  <!-- <td>{{customer.last_purchase| date: 'dd-MM-yyyy': 'UTC-5'}}</td> -->
                   <td>
 
-                    <button class="btn btn-secondary" (click)="seeAll(customer)" data-bs-toggle="modal"
+                    <button class="btn btn-info" title="Progreso Físico" (click)="seeAllProggres(customer)" data-bs-toggle="modal"
+                    data-bs-target="#physical_progress"><i class="fas fa-solid fa-spinner"></i>
+                  </button>
+
+                    <button class="btn btn-secondary" title="Membresía" (click)="seeAll(customer)" data-bs-toggle="modal"
                       data-bs-target="#vermas"><i class="fas fa-thin fa-eye"></i>
                     </button>
 
-                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalUpdateCustomer"
+                    <button class="btn btn-warning" title="Editar" data-bs-toggle="modal" data-bs-target="#modalUpdateCustomer"
                       (click)="getCustomerById(customer)"><i class="fas fa-thin fa-pen"></i>
                     </button>
 
-                    <button class="btn btn-danger" (click)="deleteByIdCustomer(customer.id)"><i
+                    <button class="btn btn-danger" title="Eliminar" (click)="deleteByIdCustomer(customer.id)"><i
                         class="fas fa-thin fa-trash"></i></button>
 
 
@@ -112,7 +116,15 @@
           (click)="cleanViewMore()"></button>
       </div>
       <div class="modal-body">
-        <ol class="list-group list-group-numbered">
+
+        <div *ngIf="flagLoadingMembership" class="d-flex justify-content-center">
+          <div  class="spinner-grow" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+
+
+        <ol class="list-group list-group-numbered" *ngIf="!flagLoadingMembership">
 
 
           <div *ngIf="!showTableInfoAdi" class="container">
@@ -151,47 +163,6 @@
               <div class="col-6">
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                   <div class="ms-2 me-auto">
-                    <div class="fw-bold">Musculatura</div>
-                    {{customerViewMore.musculature}}%
-                  </div>
-
-                </li>
-              </div>
-            </div>
-
-            <div class="row mt-2">
-              <div class="col-6">
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                  <div class="ms-2 me-auto">
-                    <div class="fw-bold">Peso</div>
-                    {{customerViewMore.weight}}
-                  </div>
-                </li>
-              </div>
-              <div class="col-6">
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                  <div class="ms-2 me-auto">
-                    <div class="fw-bold">Estatura</div>
-                    {{customerViewMore.stature}}
-                  </div>
-                </li>
-              </div>
-
-            </div>
-
-            <div class="row mt-2">
-              <div class="col-6">
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                  <div class="ms-2 me-auto">
-                    <div class="fw-bold">Masa Corporal</div>
-                    {{customerViewMore.body_fat}}
-                  </div>
-
-                </li>
-              </div>
-              <div class="col-6">
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                  <div class="ms-2 me-auto">
                     <div class="fw-bold">Fecha Pago</div>
                     {{customerViewMore.paid_date | date: 'dd-MM-yyyy': 'UTC-5'}}
                   </div>
@@ -217,10 +188,10 @@
         <div class="container mt-2">
           <div class="row mt-2">
             <div class="col-12">
-              <h5 *ngIf="!showTableInfoAdi" class="modal-title text-end"> <span class="badge bg-primary rounded-pill"
+              <h5 *ngIf="!showTableInfoAdi && !flagLoadingMembership" class="modal-title text-end"> <span class="badge bg-primary rounded-pill"
                   style="cursor: pointer;" (click)="getCustomerByDocument(customerHistory.document)">Ver
                   Historial</span></h5>
-              <h5 *ngIf="showTableInfoAdi" class="modal-title text-end"> <span class="badge bg-danger rounded-pill"
+              <h5 *ngIf="showTableInfoAdi && !flagLoadingMembership" class="modal-title text-end"> <span class="badge bg-danger rounded-pill"
                   style="cursor: pointer;" (click)="cleanShowTableHistory()">Ocultar Historial</span></h5>
             </div>
           </div>
@@ -232,10 +203,10 @@
               <th scope="col">#</th>
               <th scope="col">Ultimo Pago</th>
               <th scope="col">Plan</th>
-              <th scope="col">Peso</th>
-              <th scope="col">Estatura</th>
-              <th scope="col">Masa Corporal</th>
-              <th scope="col">Musculatura</th>
+              <th scope="col">Fecha Inicial</th>
+              <th scope="col">Fecha Final</th>
+              <!-- <th scope="col">Plan</th> -->
+              <!-- <th scope="col">Musculatura</th> -->
             </tr>
           </thead>
           <tbody>
@@ -243,10 +214,74 @@
               <td>{{indice+1}}</td>
               <td>{{customerHistory.paid_date | date: 'dd-MM-yyyy': 'UTC-5'}}</td>
               <td>{{customerHistory.type_membership}}</td>
-              <td>{{customerHistory.weight}}</td>
-              <td>{{customerHistory.stature}}</td>
-              <td>{{customerHistory.body_fat}}</td>
-              <td>{{customerHistory.musculature}}%</td>
+              <td>{{customerHistory.membership_start_date | date: 'dd-MM-yyyy': 'UTC-5'}}</td>
+              <td>{{customerHistory.membership_end_date | date: 'dd-MM-yyyy': 'UTC-5'}}</td>
+              <!-- <td>{{customerHistory.body_fat}}</td>
+              <td>{{customerHistory.musculature}}%</td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row" *ngIf="showTableInfoAdi && existDataHistoryCustomer">
+        <div class="col-12">
+          <div class="alert alert-primary shadow-lg bg-body rounded" role="alert">
+            Upss! lo sentimos aún no se encuentran registros anteriores del usuario {{customerViewMore.name}} <i class="fa fa-frown-o"
+              aria-hidden="true"></i>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal Progreso Físco -->
+<div class="modal fade" id="physical_progress" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true"
+  data-bs-backdrop="static">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">Progreso físico de <i
+            class="text-secondary">{{customerHistory.name}}</i></h5>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="cleanViewMore()"></button>
+      </div>
+      <div class="modal-body">
+
+
+        <table class="table table-sm mt-2">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Cuello</th>
+              <th scope="col">Hombros</th>
+              <th scope="col">Pecho</th>
+              <th scope="col">Cintura</th>
+              <th scope="col">Abdomen</th>
+              <th scope="col">Cadera</th>
+              <th scope="col">Brazo</th>
+              <th scope="col">Antebrazo</th>
+              <th scope="col">Muslo</th>
+              <th scope="col">Pantorrilla</th>
+              <th scope="col">Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let customerHistoryProgress of customerHistoryPhysicalProgress let indice = index">
+              <td>{{indice+1}}</td>
+              <td class="text-end">{{customerHistoryProgress.neck}}</td>
+              <td class="text-end">{{customerHistoryProgress.shoulders}}</td>
+              <td class="text-end">{{customerHistoryProgress.chest}}</td>
+              <td class="text-end">{{customerHistoryProgress.abdomen}}</td>
+              <td class="text-end">{{customerHistoryProgress.waist}}</td>
+              <td class="text-end">{{customerHistoryProgress.hips}}</td>
+              <td class="text-end">{{customerHistoryProgress.biceps}}</td>
+              <td class="text-end">{{customerHistoryProgress.forearm}}</td>
+              <td class="text-end">{{customerHistoryProgress.thigh}}</td>
+              <td class="text-end">{{customerHistoryProgress.calf}}</td>
+              <td class="text-center">{{customerHistoryProgress.progress_date | date: 'dd-MM-yyyy': 'UTC-5'}}</td>
             </tr>
           </tbody>
         </table>

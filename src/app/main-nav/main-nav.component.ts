@@ -29,4 +29,10 @@ export class MainNavComponent implements OnInit {
     this.router.navigate(['/login'])
   }
 
+
+  toggleDropdown(event: Event) {
+    event.preventDefault(); // Evita la navegación no deseada
+    // console.log("Dropdown activado");
+  }
+
 }

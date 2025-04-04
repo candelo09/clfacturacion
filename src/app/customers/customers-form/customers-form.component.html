@@ -1,7 +1,7 @@
 <form [formGroup]="formCustomer" (ngSubmit)="createCustomer()">
   <div class="modal fade" id="modalUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
     data-bs-backdrop="static">
-    <div class="modal-dialog modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-dialog  modal-xl modal-dialog-scrollable">
       <div class="modal-content">
 
         <div class="card card-primary">
@@ -22,7 +22,7 @@
                   data-bs-target="#nav-customer" type="button" role="tab" aria-controls="nav-customer"
                   aria-selected="true">Cliente</button>
                 <button class="nav-link" id="nav-progress-tab" data-bs-toggle="tab" data-bs-target="#nav-progress"
-                  type="button" role="tab" aria-controls="nav-progress" aria-selected="false">Progreso Físico</button>
+                  type="button" role="tab" aria-controls="nav-progress" aria-selected="false">Medidas Iniciales</button>
               </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -75,6 +75,9 @@
                       <input type="email" class="form-control" formControlName="email" placeholder="Ingrese email"
                         required>
                     </div>
+                    <div *ngIf="email?.errors?.['pattern']" class="alert alert-danger" role="alert">
+                      El formato del email no es válido.
+                    </div>
                   </div>
 
                 </div>
@@ -124,7 +127,8 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-street-view"></i></span>
                       </div>
-                      <input type="text" class="form-control" formControlName="address" placeholder="Ingrese dirección" required>
+                      <input type="text" class="form-control" formControlName="address" placeholder="Ingrese dirección"
+                        required>
                     </div>
                   </div>
                 </div>
@@ -144,31 +148,40 @@
               <div class="tab-pane fade" id="nav-progress" role="tabpanel" aria-labelledby="nav-progress-tab">
                 <!-- //TAB PHYSICAL PROGRESS -->
                 <hr>
-                <div class="row g-3">
+
+                <div class="container_silhouette">
+                  <img src="../../../assets/img/siluetaM.jpeg" alt="Silueta" class="silhouette" />
+                  <button type="button" class="btn_silhouette neck" (click)="measure('Cuello')">Cuello</button>
+                  <button type="button" class="btn_silhouette shoulders" (click)="measure('Hombros')">Hombros</button>
+                  <button type="button" class="btn_silhouette chest" (click)="measure('Pecho')">Pecho</button>
+                  <button type="button" class="btn_silhouette abdomen" (click)="measure('Abdomen')">Abdomen</button>
+                  <button type="button" class="btn_silhouette waist" (click)="measure('Cintura')">Cintura</button>
+                  <button type="button" class="btn_silhouette hips" (click)="measure('Cadera')">Cadera</button>
+                  <button type="button" class="btn_silhouette biceps" (click)="measure('Brazo')">Brazo</button>
+                  <button type="button" class="btn_silhouette forearm" (click)="measure('Antebrazo')">Antebrazo</button>
+                  <button type="button" class="btn_silhouette thigh" (click)="measure('Muslo')">Muslo</button>
+                  <button type="button" class="btn_silhouette calf" (click)="measure('Pantorrilla')">Pantorrilla</button>
+                </div>
+                <!-- <div class="row g-3">
                   <div class="col-lg-6">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
-                      </div>
+                    <div class="form-floating mb-3">
                       <input type="number" class="form-control " formControlName="stature"
                         placeholder="Ingrese la altura en CM">
+                      <label for="floatingInput">Altura en cm</label>
                     </div>
                   </div>
 
                   <div class="col-lg-6">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-file-signature"></i></span>
-                      </div>
+                    <div class="form-floating mb-3">
                       <input type="number" class="form-control" formControlName="weight"
                         placeholder="Ingrese el peso en KG">
+                      <label for="floatingInput">Peso en kg</label>
                     </div>
                   </div>
                 </div>
 
 
                 <div class="row g-3">
-
 
                   <div class="col-lg-6">
                     <div class="input-group mb-3">
@@ -194,31 +207,25 @@
 
                 <div class="row g-3">
                   <div class="col-4">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
-                      </div>
+                    <div class="form-floating mb-3">
                       <input type="number" class="form-control" formControlName="calf_circumference"
                         placeholder="Circunferencia Pantorrilla">
+                      <label for="floatingInput">Circunferencia Pantorrilla</label>
                     </div>
                   </div>
                   <div class="col-4">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
-                      </div>
+                    <div class="form-floating mb-3">
                       <input type="number" class="form-control" formControlName="belt_circumference"
                         placeholder="Circunferencia Cintura">
+                      <label for="floatingInput">Circunferencia Cintura</label>
                     </div>
                   </div>
 
                   <div class="col-lg-4">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-street-view"></i></span>
-                      </div>
+                    <div class="form-floating mb-3">
                       <input type="text" class="form-control" formControlName="hip_circumference"
                         placeholder="Circunferencia Cadera">
+                      <label for="floatingInput">Circunferencia Cintura</label>
                     </div>
                   </div>
 
@@ -228,22 +235,18 @@
                 <div class="row g-3">
 
                   <div class="col-lg-6">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-key"></i></span>
-                      </div>
+                    <div class="form-floating mb-3">
                       <input type="number" class="form-control" formControlName="average_arm_muscle_circumference"
                         placeholder="Circurferencia Media del Brazo">
+                      <label for="floatingInput">Circurferencia Media del Brazo</label>
                     </div>
                   </div>
 
                   <div class="col-lg-6">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                      </div>
+                    <div class="form-floating mb-3">
                       <input type="number" class="form-control" formControlName="thigh_circumference"
                         placeholder="Circunferencia Muslo">
+                      <label for="floatingInput">Circunferencia Muslo</label>
                     </div>
                   </div>
 
@@ -251,24 +254,21 @@
 
                 <div class="row g-3">
                   <div class="col-lg-6">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                      </div>
+                    <div class="form-floating mb-3">
                       <input type="number" class="form-control" formControlName="relaxed_arm_circumference"
                         placeholder="Circunferencia Brazo Relajado">
+                      <label for="floatingInput">Circunferencia Brazo Relajado</label>
                     </div>
                   </div>
                   <div class="col-lg-6">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                      </div>
+                    <div class="form-floating mb-3">
                       <input type="number" class="form-control" formControlName="circumference_contracted_arm"
                         placeholder="Circunferencia Brazo Contraído">
+                      <label for="floatingInput">Circunferencia Brazo Contraído</label>
                     </div>
                   </div>
-                </div>
+                </div> -->
+
               </div>
 
             </div>
@@ -314,8 +314,9 @@
                 <button class="nav-link active" id="nav-customer-edit-tab" data-bs-toggle="tab"
                   data-bs-target="#nav-customer-edit" type="button" role="tab" aria-controls="nav-customer-edit"
                   aria-selected="true">Cliente</button>
-                <button class="nav-link" id="nav-progress-edit-tab" data-bs-toggle="tab" data-bs-target="#nav-progress-edit"
-                  type="button" role="tab" aria-controls="nav-progress-edit" aria-selected="false">Progreso Físico</button>
+                <!-- <button class="nav-link" id="nav-progress-edit-tab" data-bs-toggle="tab"
+                  data-bs-target="#nav-progress-edit" type="button" role="tab" aria-controls="nav-progress-edit"
+                  aria-selected="false">Progreso Físico</button> -->
               </div>
             </nav>
 
@@ -418,7 +419,8 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-street-view"></i></span>
                       </div>
-                      <input type="text" class="form-control" formControlName="address" placeholder="Ingrese dirección" required>
+                      <input type="text" class="form-control" formControlName="address" placeholder="Ingrese dirección"
+                        required>
                     </div>
                   </div>
                 </div>
@@ -440,29 +442,24 @@
                 <hr>
                 <div class="row g-3">
                   <div class="col-lg-6">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
-                      </div>
+                    <div class="form-floating mb-3">
                       <input type="number" class="form-control " formControlName="stature"
                         placeholder="Ingrese la altura en CM">
+                      <label for="floatingInput">Altura en cm</label>
                     </div>
                   </div>
 
                   <div class="col-lg-6">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-file-signature"></i></span>
-                      </div>
+                    <div class="form-floating mb-3">
                       <input type="number" class="form-control" formControlName="weight"
                         placeholder="Ingrese el peso en KG">
+                      <label for="floatingInput">Peso en kg</label>
                     </div>
                   </div>
                 </div>
 
 
                 <div class="row g-3">
-
 
                   <div class="col-lg-6">
                     <div class="input-group mb-3">
@@ -488,31 +485,25 @@
 
                 <div class="row g-3">
                   <div class="col-4">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
-                      </div>
+                    <div class="form-floating mb-3">
                       <input type="number" class="form-control" formControlName="calf_circumference"
                         placeholder="Circunferencia Pantorrilla">
+                      <label for="floatingInput">Circunferencia Pantorrilla</label>
                     </div>
                   </div>
                   <div class="col-4">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
-                      </div>
+                    <div class="form-floating mb-3">
                       <input type="number" class="form-control" formControlName="belt_circumference"
                         placeholder="Circunferencia Cintura">
+                      <label for="floatingInput">Circunferencia Cintura</label>
                     </div>
                   </div>
 
                   <div class="col-lg-4">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-street-view"></i></span>
-                      </div>
+                    <div class="form-floating mb-3">
                       <input type="text" class="form-control" formControlName="hip_circumference"
                         placeholder="Circunferencia Cadera">
+                      <label for="floatingInput">Circunferencia Cintura</label>
                     </div>
                   </div>
 
@@ -522,22 +513,18 @@
                 <div class="row g-3">
 
                   <div class="col-lg-6">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-key"></i></span>
-                      </div>
+                    <div class="form-floating mb-3">
                       <input type="number" class="form-control" formControlName="average_arm_muscle_circumference"
                         placeholder="Circurferencia Media del Brazo">
+                      <label for="floatingInput">Circurferencia Media del Brazo</label>
                     </div>
                   </div>
 
                   <div class="col-lg-6">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                      </div>
+                    <div class="form-floating mb-3">
                       <input type="number" class="form-control" formControlName="thigh_circumference"
                         placeholder="Circunferencia Muslo">
+                      <label for="floatingInput">Circunferencia Muslo</label>
                     </div>
                   </div>
 
@@ -545,21 +532,17 @@
 
                 <div class="row g-3">
                   <div class="col-lg-6">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                      </div>
+                    <div class="form-floating mb-3">
                       <input type="number" class="form-control" formControlName="relaxed_arm_circumference"
                         placeholder="Circunferencia Brazo Relajado">
+                      <label for="floatingInput">Circunferencia Brazo Relajado</label>
                     </div>
                   </div>
                   <div class="col-lg-6">
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                      </div>
+                    <div class="form-floating mb-3">
                       <input type="number" class="form-control" formControlName="circumference_contracted_arm"
                         placeholder="Circunferencia Brazo Contraído">
+                      <label for="floatingInput">Circunferencia Brazo Contraído</label>
                     </div>
                   </div>
                 </div>
@@ -579,3 +562,4 @@
     </div>
   </div>
 </form>
+

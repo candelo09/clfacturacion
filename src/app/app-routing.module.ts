@@ -15,6 +15,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // { path: '**', redirectTo: '/login' },
   { path: 'login', component: LoginComponent},
+
   { path: 'main', component: MainNavComponent,
     children: [
       {path: 'home', component: HomeComponent},
@@ -23,7 +24,7 @@ const routes: Routes = [
       {path: 'producto', component: ProductoListComponent},
       {path: 'cliente', component: CustomersListComponent},
       {path: 'planes', component:MembershipListComponent},
-      {path: 'pago', component:PaymentListComponent}
+      {path: 'pago', component:PaymentListComponent},
     ], canActivate: [AuthGuard]
   },
 

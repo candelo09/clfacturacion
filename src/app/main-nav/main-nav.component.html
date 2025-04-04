@@ -19,8 +19,8 @@
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#">
             <!-- <i class="far fa-comments"></i> -->
-            <i class="fa fa-user" ></i>
-             <!-- <img src="../../assets/img/iconoLoginDefault.png" width="40" height="40"> -->
+            <!-- <i class="fa fa-user"></i> -->
+            <img src="../../assets/img/iconoLoginDefault.png" width="40" height="40">
             <!-- <span class="badge badge-danger navbar-badge">ADMIN</span> -->
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -44,7 +44,8 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
     <a href="main/home" class="brand-link">
-      <img src="assets/logos/iconoCL.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="assets/logos/iconoCL.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+        style="opacity: .8">
       <span class="brand-text font-weight-light">SYSTEM WEB</span>
     </a>
 
@@ -94,15 +95,31 @@
               </p>
             </a>
           </li>
-
-          <li class="nav-item">
-            <a class="nav-link pe-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
               <i class="nav-icon fa fa-user-circle"></i>
               <p>
                 Planes
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item active" href="main/planes" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Administrar planes</p>
+                </a>
+              </li>
+
+              <li><a class="dropdown-item" href="main/pago" class="nav-link">
+                  <i class="fa fa-user-plus nav-icon"></i>
+                  <p>Membresias</p>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+          <!-- <li class="nav-item">
+
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="main/planes" class="nav-link">
@@ -111,13 +128,10 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="main/pago" class="nav-link">
-                  <i class="fa fa-user-plus nav-icon"></i>
-                  <p>Membresias</p>
-                </a>
+
               </li>
             </ul>
-          </li>
+          </li> -->
 
           <!-- <li class="nav-item">
             <a href="#" class="nav-link">

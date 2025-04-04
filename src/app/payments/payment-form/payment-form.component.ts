@@ -55,6 +55,7 @@ export class PaymentFormComponent {
       payment_method: ['', Validators.required],
       amount_show:['', Validators.required],
       membership_start_date:['',Validators.required],
+      payment_state:[1, Validators.required]
       // membership_end_date: ['', Validators.required]
     })
   }
@@ -83,26 +84,76 @@ export class PaymentFormComponent {
     this.searchedOptionsMembership.length == 0 ? this.searchedOptionsMembership = this.listTotalMembership : this.searchedOptionsMembership;
   }
 
-  public createPayment() {
+  public async createPayment() {
 
-    console.log(this.formPayment.value);
+    // console.log(this.formPayment.value);
+
     if (this.formPayment.valid) {
 
-      this.payment_service.createPayment(this.formPayment.value as Payment).subscribe(() => {
+      let customerPayment:Payment;
+
+      if (this.formPayment.value.customer.id) {
+        customerPayment  = await lastValueFrom(this.payment_service.getPaymentByUser(this.formPayment.value.customer.id)).then();
 
         Swal.fire({
-          text: 'Pago realizado satisfactoriamente',
-          icon: 'success',
-          showConfirmButton: false,
-          timer: 2000
+              title: "¿Deseas agregar el nuevo pago?",
+              text: `Actualmente el usuario ${this.formPayment.value.customer.name} tiene un plan activo`,
+              icon: 'info',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              cancelButtonText: 'Cancelar',
+              confirmButtonText: 'Si, Eliminar!'
+            }).then(async (result) => {
+              if (result.isConfirmed) {
 
-        }).then((result) => {
-          this.pdfSrc = this.payment_service.generatePdf(this.formPayment.value as Payment);
-          window.open(this.pdfSrc, '_blank');
-          window.location.reload();
-        });
+                let respcreatePayment = await lastValueFrom(this.payment_service.createPayment(this.formPayment.value as Payment)).then();
 
-      });
+                // console.log('respcreatePayment ',respcreatePayment);
+
+                  Swal.fire({
+                    text: 'Pago realizado satisfactoriamente',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 2000
+
+                  }).then(async (result) => {
+
+                    console.log('customerPayment ',customerPayment);
+
+
+                    customerPayment.payment_state = 0;
+
+                    await lastValueFrom(this.payment_service.updatePayment(customerPayment)).then()
+
+                    // this.pdfSrc = this.payment_service.generatePdf(this.formPayment.value as Payment);
+                    // window.open(this.pdfSrc, '_blank');
+                    // window.location.reload();
+                  });
+
+
+              }
+
+
+            })
+        return;
+      }
+
+      // this.payment_service.createPayment(this.formPayment.value as Payment).subscribe(() => {
+
+      //   Swal.fire({
+      //     text: 'Pago realizado satisfactoriamente',
+      //     icon: 'success',
+      //     showConfirmButton: false,
+      //     timer: 2000
+
+      //   }).then((result) => {
+      //     this.pdfSrc = this.payment_service.generatePdf(this.formPayment.value as Payment);
+      //     window.open(this.pdfSrc, '_blank');
+      //     window.location.reload();
+      //   });
+
+      // });
     } else {
       Swal.fire({
         text: 'Los campos son obligatorios',

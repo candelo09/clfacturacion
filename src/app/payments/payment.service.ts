@@ -28,6 +28,15 @@ export class PaymentService {
 
   }
 
+  // Get membership By user
+  public getPaymentByUser(customer_id:number): Observable<Payment> {
+    // this.headers.append('Autorization', `Bearer ${sessionStorage.getItem('token')}`)
+    // this.headers.append('Access-Control-Allow-Origin', '*')
+    // this.headers.append('Autorization', `Bearer ${sessionStorage.getItem('token')}`)
+    // this.headers.append('Autorization', `Bearer ${sessionStorage.getItem('token')}`)
+    return this.http.get<Payment>(`${this.routePayment}by/customer/${customer_id}`);
+
+  }
 
   // Create membership
   public createPayment(membership: Payment): Observable<any> {

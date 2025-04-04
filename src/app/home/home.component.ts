@@ -35,6 +35,7 @@ export class HomeComponent implements OnInit {
     this.usersTotal();
     this.planesTotal();
     this.paymentsTotal();
+
   }
 
   categoryTotal(){
