@@ -45,7 +45,7 @@ import { CommonModule } from '@angular/common';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    CommonModule,
+    // CommonModule,
     FormsModule
   ],
   providers: [

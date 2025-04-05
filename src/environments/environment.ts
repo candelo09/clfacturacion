@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://clsyst3m.com:8443/back/'
-  // apiUrl: 'http://localhost:8081/back/'
+  // apiUrl: 'https://clsyst3m.com:8443/back/'
+  apiUrl: 'http://localhost:8081/back/'
 };
 
 /*
