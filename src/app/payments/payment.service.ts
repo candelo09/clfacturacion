@@ -2,9 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Payment } from '../interfaces/Paymen';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import jsPDF from 'jspdf';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { CustomersService } from '../customers/customers.service';
+import { Customer } from '../interfaces/Customer';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,7 @@ export class PaymentService {
 
   private headers = new Headers();
 
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
+  constructor(private http: HttpClient, private sanitizer: DomSanitizer, private  customerService:CustomersService) { }
 
 
   // Get membership list
@@ -54,7 +56,7 @@ export class PaymentService {
   }
 
   //Generar PDF
-  generatePdf(payment: any): String | SafeResourceUrl {
+  async generatePdf(payment: any): Promise<String | SafeResourceUrl> {
     const formatDate = (dateString: string) => {
       const date = new Date(dateString);
       return date.toLocaleDateString('es-CO', {
@@ -65,7 +67,8 @@ export class PaymentService {
     };
 
     const startDate = new Date(payment.membership_start_date);
-    const endDate = this.calculateEndDate(startDate, payment.membership.type_membership);
+    // const endDate = this.calculateEndDate(startDate, payment.membership.type_membership);
+    const endDate = await this.calculateEndDate(payment.customer);
 
     const doc = new jsPDF({
       format: 'a5',
@@ -102,8 +105,8 @@ export class PaymentService {
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
     doc.text(`Plan: ${payment.membership.type_membership}`, 20, 110);
-    doc.text(`Fecha de inicio: ${formatDate(payment.membership_start_date.toString())}`, 20, 115);
-    doc.text(`Fecha de culminación: ${formatDate(payment.membership_end_date ?? endDate.toString())}`, 20, 120);
+    doc.text(`Fecha de inicio: ${payment.membership_start_date.toString()}`, 20, 115);
+    doc.text(`Fecha de culminación: ${payment.membership_end_date == null ? endDate.toString().split('T')[0] : payment.membership_end_date.toString().split('T')[0]}`, 20, 120);
 
     const pdfBlob = doc.output('blob');
     const pdfUrl = URL.createObjectURL(pdfBlob);
@@ -193,34 +196,44 @@ export class PaymentService {
     return lines;
   }
 
-  private calculateEndDate(startDate: Date, planType: string): Date {
-    const endDate = new Date(startDate); // Copiar la fecha de inicio para no modificarla
+  // private calculateEndDate(startDate: Date, planType: string): Date {
+  //   const endDate = new Date(startDate); // Copiar la fecha de inicio para no modificarla
 
-    switch (planType) {
-      case 'MENSUAL 4 DIAS A LA SEMANA':
-      case 'MENSUAL LUNES A VIERNES':
-      case 'MENSUAL 3 DIAS A LA SEMANA':
-        endDate.setMonth(endDate.getMonth() + 1); // Sumar 1 mes
-        break;
+  //   switch (planType) {
+  //     case 'MENSUAL 4 DIAS A LA SEMANA':
+  //     case 'MENSUAL LUNES A VIERNES':
+  //     case 'MENSUAL 3 DIAS A LA SEMANA':
+  //       endDate.setMonth(endDate.getMonth() + 1); // Sumar 1 mes
+  //       break;
 
-      case 'TRIMESTRAL 3 DIAS A LA SEMANA':
-      case 'TRIMESTRAL 4 DIAS A LA SEMANA':
-      case 'TRIMESTRAL LUNES A VIERNES':
-        endDate.setMonth(endDate.getMonth() + 3); // Sumar 3 meses
-        break;
+  //     case 'TRIMESTRAL 3 DIAS A LA SEMANA':
+  //     case 'TRIMESTRAL 4 DIAS A LA SEMANA':
+  //     case 'TRIMESTRAL LUNES A VIERNES':
+  //       endDate.setMonth(endDate.getMonth() + 3); // Sumar 3 meses
+  //       break;
 
-      case 'ANUAL LUNES A VIERNES':
-        endDate.setFullYear(endDate.getFullYear() + 1); // Sumar 1 año
-        break;
+  //     case 'ANUAL LUNES A VIERNES':
+  //       endDate.setFullYear(endDate.getFullYear() + 1); // Sumar 1 año
+  //       break;
 
-      case 'CLASE':
-        endDate.setDate(endDate.getDate() + 1); // Sumar 1 día
-        break;
+  //     case 'CLASE':
+  //       endDate.setDate(endDate.getDate() + 1); // Sumar 1 día
+  //       break;
 
-      default:
-        throw new Error(`Tipo de plan no válido: ${planType}`);
-    }
+  //     default:
+  //       throw new Error(`Tipo de plan no válido: ${planType}`);
+  //   }
 
-    return endDate;
+  //   return endDate;
+  // }
+
+  private async calculateEndDate(customer:Customer){
+    const customerAccess = await lastValueFrom (this.customerService.findByDocumentAccess(customer)).then();
+
+    console.log('customerAccess ',customerAccess);
+
+
+    return customerAccess.membership_end_date;
+
   }
 }

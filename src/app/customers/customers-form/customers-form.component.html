@@ -21,7 +21,7 @@
                 <button class="nav-link active" id="nav-customer-tab" data-bs-toggle="tab"
                   data-bs-target="#nav-customer" type="button" role="tab" aria-controls="nav-customer"
                   aria-selected="true">Cliente</button>
-                <button class="nav-link" id="nav-progress-tab" data-bs-toggle="tab" data-bs-target="#nav-progress"
+                <button *ngIf="false"  class="nav-link" id="nav-progress-tab" data-bs-toggle="tab" data-bs-target="#nav-progress"
                   type="button" role="tab" aria-controls="nav-progress" aria-selected="false">Medidas Iniciales</button>
               </div>
             </nav>
@@ -94,7 +94,7 @@
                   </div>
                   <div class="col-3">
                     <select class="form-select" formControlName="rh">
-                      <option value="" disabled selected>Seleccione el RH</option>
+                      <option value="" selected>Seleccione el RH</option>
                       <option *ngFor="let rhS of rhSelect">
                         {{rhS}}</option>
 
@@ -150,7 +150,7 @@
                 <hr>
 
                 <div class="container_silhouette">
-                  <img src="../../../assets/img/siluetaM.jpeg" alt="Silueta" class="silhouette" />
+                  <img src="assets/img/siluetaM.jpeg" alt="Silueta" class="silhouette" />
                   <button type="button" class="btn_silhouette neck" (click)="measure('Cuello')">Cuello</button>
                   <button type="button" class="btn_silhouette shoulders" (click)="measure('Hombros')">Hombros</button>
                   <button type="button" class="btn_silhouette chest" (click)="measure('Pecho')">Pecho</button>

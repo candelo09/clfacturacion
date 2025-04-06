@@ -103,7 +103,7 @@ export class CustomersFormComponent implements OnInit {
 
 
 
-    this.formCustomer.value.blood_type = this.formCustomer.value.blood_type + ' ' + this.formCustomer.value.rh
+    // this.formCustomer.value.blood_type = this.formCustomer.value.blood_type + ' ' + this.formCustomer.value.rh
 
     console.log(this.formCustomer.value);
 
@@ -114,7 +114,7 @@ export class CustomersFormComponent implements OnInit {
 
 
 
-      this.formCustomer.value.blood_type = `${this.formCustomer.value.blood_type} ${this.formCustomer.value.rh}`
+      this.formCustomer.value.blood_type = `${this.formCustomer.value.blood_type} ${this.formCustomer.value.rh.replace('RH', '')}`
 
 
 
@@ -130,7 +130,7 @@ export class CustomersFormComponent implements OnInit {
           timer: 3000,
         }).then((resp) =>{
           // this.createPhyisicalProgress(this.formCustomer.value, respCustomer)
-            // window.location.reload();
+            window.location.reload();
         })
 
 
@@ -225,9 +225,9 @@ export class CustomersFormComponent implements OnInit {
     // console.log('rhTemp ', rhTemp);
 
 
-    var last_purchase_temp = customer.last_purchase.toString().split('T');
+    var last_purchase_temp = customer.last_purchase != null ? customer.last_purchase.toString().split('T') : '';
 
-    var create_at_temp = customer.create_at.toString().split('T');
+    var create_at_temp = customer.create_at != null ? customer.create_at.toString().split('T') : '';
 
     this.formCustomer.patchValue({
       id: customer.id,
@@ -319,7 +319,7 @@ export class CustomersFormComponent implements OnInit {
   formReset() {
     this.formCustomer.reset({});
 
-    console.log('this.rhSelect ',this.rhSelect);
+    // console.log('this.rhSelect ',this.rhSelect);
 
 
     // this.formCustomer.patchValue({

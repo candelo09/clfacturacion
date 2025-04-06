@@ -13,7 +13,7 @@ export class FormColaboradorComponent implements OnInit {
 
   formColaborador: FormGroup;
 
-  imagenUser: string = "../../../assets/img/iconoLoginDefault.png";
+  imagenUser: string = "assets/img/iconoLoginDefault.png";
   rutaImagen = "";
 
   colaborador: Users = {} as Users;
