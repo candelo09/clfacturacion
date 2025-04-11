@@ -1,8 +1,8 @@
 import { Component,  OnInit, ViewChild} from '@angular/core';
 import { Users } from 'src/app/interfaces/Colaborador';
-import Swal from 'sweetalert2';
 import { ColaboradorService } from '../colaborador.service';
 import { FormColaboradorComponent } from '../form-colaborador/form-colaborador.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-colaborador-list',

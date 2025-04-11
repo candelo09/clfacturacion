@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Category } from 'src/app/interfaces/Category';
-import Swal from 'sweetalert2';
 import { CategoriaService } from '../categoria.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form-categoria',

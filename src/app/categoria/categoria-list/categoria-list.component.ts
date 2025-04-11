@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Category } from 'src/app/interfaces/Category';
-import Swal from 'sweetalert2';
 import { CategoriaService } from '../categoria.service';
 import { FormCategoriaComponent } from '../form-categoria/form-categoria.component';
 import { UtilsService } from 'src/app/utils.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-categoria-list',

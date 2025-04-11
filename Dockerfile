@@ -1,89 +1,44 @@
-# # FROM node:alpine
-
-# # WORKDIR /usr/src/app
-
-# # COPY . /usr/src/app
-
-# # RUN npm install -g @angular/cli17.3.12
-
-# # RUN npm install
-
-# # CMD ["ng", "serve", "--host", "0.0.0.0"]
-
-# # Usar Node.js 20 como base
-# FROM node:20
-
-# WORKDIR /app
-
-# # Copiar archivos y generar el build
-# COPY package.json package-lock.json ./
-# RUN npm install --force
-
-# COPY . .
-# RUN npm run build --prod
-
-# # Instalar Express.js
-# RUN npm install express
-
-# # Exponer el puerto 4200
-# EXPOSE 4200
-
-# # Comando para iniciar Express
-# CMD ["node", "server.js", "--host", "0.0.0.0"]
-
-
-# # 1️⃣ Fase de construcción: Angular
+# 1️⃣ Fase de construcción
 # FROM node:20 AS build
 # WORKDIR /app
 
-# # Copiar archivos esenciales
 # COPY package.json package-lock.json ./
-
-# # Instalar dependencias sin dependencias de desarrollo
 # RUN npm install --force
-
-# # Copiar el código fuente
 # COPY . .
 
-# # Construir Angular
 # RUN npm run build --configuration=production --base-href=/clfacturacion/
 
-# # 2️⃣ Fase final: Servidor Express ligero
+# # 2️⃣ Fase final
 # FROM node:20-alpine
 # WORKDIR /app
 
-# # Copiar solo la build de Angular y Express desde la fase anterior
-# COPY --from=build /app/dist ./dist
+# # Copiar correctamente la build
+# COPY --from=build /app/dist/clfacturacion ./dist/clfacturacion
 # COPY --from=build /app/server.js .
 # COPY --from=build /app/package.json .
 # COPY --from=build /app/node_modules ./node_modules
 
-# # Exponer puerto del servidor Express
 # EXPOSE 4200
-
-# # Iniciar servidor Express
 # CMD ["node", "server.js"]
 
 
-# 1️⃣ Fase de construcción
-FROM node:20 AS build
+# Fase de construcción
+FROM node:23-slim AS build
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm install --force
+RUN npm ci
 COPY . .
-
 RUN npm run build --configuration=production --base-href=/clfacturacion/
 
-# 2️⃣ Fase final
-FROM node:20-alpine
+# Fase final
+FROM node:23-slim
 WORKDIR /app
 
-# Copiar correctamente la build
 COPY --from=build /app/dist/clfacturacion ./dist/clfacturacion
-COPY --from=build /app/server.js .
-COPY --from=build /app/package.json .
-COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/server.js ./
+COPY --from=build /app/package.json ./
+RUN npm ci --omit=dev
 
 EXPOSE 4200
 CMD ["node", "server.js"]
