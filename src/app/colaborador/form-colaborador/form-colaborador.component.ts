@@ -3,6 +3,7 @@ import { UntypedFormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NewColaborador, Users } from 'src/app/interfaces/Colaborador';
 import Swal from 'sweetalert2';
 import { ColaboradorService } from '../colaborador.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-form-colaborador',
@@ -51,7 +52,7 @@ export class FormColaboradorComponent implements OnInit {
       id_membership: [''],
       telephone: [''],
       address: [''],
-      email: [''],
+      email: ['', [Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
       update_at: [''],
     })
 
@@ -82,10 +83,14 @@ export class FormColaboradorComponent implements OnInit {
     });
   }
 
+  get email() {
+    return this.formColaborador.get('email');
+  }
+
 
 
   // Función que crea el colaborador
-  public createColaborador() {
+  public async createColaborador() {
 
     this.formColaborador.value.state = this.formColaborador.value.state ? 1 : 0;
 
@@ -99,19 +104,9 @@ export class FormColaboradorComponent implements OnInit {
 
       // Registra en bd el nuevo colaborador
       this.formColaborador.value.image = this.imagenUser;
-      this.colaboradorService.addUser(this.formColaborador.value as Users).subscribe(response => {
+      let responseCreateUser$ = await lastValueFrom(this.colaboradorService.addUser(this.formColaborador.value as Users))
+        .then(resp => {
 
-
-        if (this.colaborador == null) {
-          Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: '¡Ya existe un colaborador con el mismo documento!',
-            showConfirmButton: false,
-            timer: 3000,
-          })
-
-        } else {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -121,9 +116,25 @@ export class FormColaboradorComponent implements OnInit {
           })
 
           window.location.reload();
-        }
 
-      });
+        })
+        .catch(resp => {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: `¡Lo sentimos ha ocurrido un error!`,
+            text: `Por favor verifica que el usuario ${this.formColaborador.value.username} o el documento ${this.formColaborador.value.id_document} no existan`,
+            showConfirmButton: true,
+          })
+        }
+        );
+
+
+
+
+
+
+
 
     } else {
 
@@ -143,7 +154,7 @@ export class FormColaboradorComponent implements OnInit {
 
     const file_images = event.target.files[0];
 
-    console.log("file_images ",file_images);
+    console.log("file_images ", file_images);
 
 
     this.colaboradorService.uploadImages(file_images).subscribe(resp_img => {

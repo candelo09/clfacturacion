@@ -3,11 +3,11 @@
   width: 500px;
   margin: auto;
 }
-.silhouette {
+/* .silhouette {
   width: 100%;
   height: auto;
   display: block;
-}
+} */
 .btn_silhouette {
   position: absolute;
   background: rgba(255, 255, 255, 0.9);
