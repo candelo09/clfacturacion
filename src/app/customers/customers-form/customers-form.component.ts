@@ -21,6 +21,42 @@ export class CustomersFormComponent implements OnInit {
 
   rhSelect: any[] = ['RH +', 'RH -'];
 
+  showInputs: any = {
+    cuello: false,
+    hombros: false,
+    pecho: false,
+    abdomen: false,
+    cintura: false,
+    cadera: false,
+    brazo: false,
+    antebrazo: false,
+    muslo: false,
+    pantorrilla: false
+    // puedes añadir más
+  };
+
+  medidas = {
+    cuello: null,
+    hombros: null,
+    pecho: null,
+    abdomen: null,
+    cintura: null,
+    cadera: null,
+    brazo: null,
+    antebrazo: null,
+    muslo: null,
+    pantorrilla: null
+  };
+
+  gender: any = {
+    M: false,
+    F: false,
+    ND: false,
+  }
+
+  flagAlertImc: boolean = false;
+
+
   constructor(private fb: FormBuilder, private customerService: CustomersService) {
     this.formCustomer = this.fb.group({});
     // this.formPhysicalProgress = this.fb.group({});
@@ -49,11 +85,11 @@ export class CustomersFormComponent implements OnInit {
       eps: [''],
       date_birth: [],
       rh: [],
-      last_purchase:[''],
+      last_purchase: [''],
       update_at: [''],
-      stature:[''],
-      weight:[''],
-      body_fat: [''],
+      stature: [''],
+      weight: [''],
+      body_fat: [0.00],
       musculature: [''],
       calf_circumference: [''],
       average_arm_muscle_circumference: [''],
@@ -61,7 +97,18 @@ export class CustomersFormComponent implements OnInit {
       hip_circumference: [''],
       thigh_circumference: [''],
       relaxed_arm_circumference: [''],
-      circumference_contracted_arm: ['']
+      circumference_contracted_arm: [''],
+      neck: [0.00],
+      neckTemp: [0],
+      waist: [0.00],
+      waistTemp: [0],
+      hips: [0.00],
+      hipsTemp: [0],
+      imc: [],
+      gender: [''],
+      cardiobascular: [0.00],
+      abdominalObesity: [0.00],
+      corporalAdiposity: [0.00]
 
     })
 
@@ -103,7 +150,7 @@ export class CustomersFormComponent implements OnInit {
 
 
 
-    this.formCustomer.value.blood_type = this.formCustomer.value.blood_type + ' ' + this.formCustomer.value.rh
+    // this.formCustomer.value.blood_type = this.formCustomer.value.blood_type + ' ' + this.formCustomer.value.rh
 
     console.log(this.formCustomer.value);
 
@@ -114,7 +161,7 @@ export class CustomersFormComponent implements OnInit {
 
 
 
-      this.formCustomer.value.blood_type = `${this.formCustomer.value.blood_type} ${this.formCustomer.value.rh}`
+      this.formCustomer.value.blood_type = `${this.formCustomer.value.blood_type} ${this.formCustomer.value.rh.replace('RH', '')}`
 
 
 
@@ -125,12 +172,12 @@ export class CustomersFormComponent implements OnInit {
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: '¡Usuario registrado satisfactoriamente!',
+          title: 'Cliente registrado satisfactoriamente!',
           showConfirmButton: false,
           timer: 3000,
-        }).then((resp) =>{
-          // this.createPhyisicalProgress(this.formCustomer.value, respCustomer)
-            // window.location.reload();
+        }).then((resp) => {
+          this.createPhyisicalProgress(this.formCustomer.value, respCustomer)
+          window.location.reload();
         })
 
 
@@ -141,19 +188,19 @@ export class CustomersFormComponent implements OnInit {
           Swal.fire({
             position: 'top-end',
             icon: 'error',
-            title: `¡Ya existe un colaborador con el mismo documento`,
+            title: `¡Ya existe un cliente con el mismo documento`,
             showConfirmButton: false,
             timer: 3000,
           })
-        }else{
+        } else {
 
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: `${resp.error}`,
-          showConfirmButton: false,
-          timer: 3000,
-        })
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: `${resp.error}`,
+            showConfirmButton: false,
+            timer: 3000,
+          })
         }
         console.log('resp error', resp);
 
@@ -171,49 +218,58 @@ export class CustomersFormComponent implements OnInit {
     }
   }
 
-  // public async createPhyisicalProgress(bodyPhysicalProgress:any, customer:Customer){
-  //   console.log('customer ', customer);
-
-  //   const customer_temp:Customer = {
-  //     id: 0,
-  //     name: customer.name,
-  //     document:customer.document,
-  //     email: customer.email,
-  //     phone: customer.phone,
-  //     address: customer.address,
-  //     date_birth: customer.date_birth,
-  //     purchases: 0,
-  //     last_purchase: new Date(),
-  //     create_at: customer.create_at,
-  //     update_at: customer.update_at,
-  //     blood_type: customer.blood_type,
-  //     eps: customer.eps,
-  //     state: customer.state
-  //   }
+  public async createPhyisicalProgress(bodyPhysicalProgress: any, customer: Customer) {
+    console.log('customer ', customer);
 
 
-  //   const bodyPhysicalProgress_temp:PhysicalProgress = {
-  //     id_user: null,
-  //     weight: bodyPhysicalProgress.weight,
-  //     body_fat: bodyPhysicalProgress.body_fat,
-  //     musculature: bodyPhysicalProgress.musculature,
-  //     id_customer: customer,
-  //     stature: bodyPhysicalProgress.stature,
-  //     calf_circumference: bodyPhysicalProgress.calf_circumference,
-  //     average_arm_muscle_circumference: bodyPhysicalProgress.average_arm_muscle_circumference,
-  //     belt_circumference: bodyPhysicalProgress.belt_circumference,
-  //     hip_circumference: bodyPhysicalProgress.hip_circumference,
-  //     thigh_circumference: bodyPhysicalProgress.thigh_circumference,
-  //     relaxed_arm_circumference: bodyPhysicalProgress.relaxed_arm_circumference,
-  //     circumference_contracted_arm: bodyPhysicalProgress.circumference_contracted_arm
-  //   }
+
+    // const customer_temp:Customer = {
+    //   id: 0,
+    //   name: customer.name,
+    //   document:customer.document,
+    //   email: customer.email,
+    //   phone: customer.phone,
+    //   address: customer.address,
+    //   date_birth: customer.date_birth,
+    //   purchases: 0,
+    //   last_purchase: new Date(),
+    //   create_at: customer.create_at,
+    //   update_at: customer.update_at,
+    //   blood_type: customer.blood_type,
+    //   eps: customer.eps,
+    //   state: customer.state
+    // }
 
 
-  //   return await lastValueFrom(this.customerService.addPhysicalProgress(bodyPhysicalProgress_temp));
+    const bodyPhysicalProgress_temp: PhysicalProgress = {
+      id_user: null,
+      weight: bodyPhysicalProgress.weight,
+      body_fat: bodyPhysicalProgress.body_fat,
+      musculature: bodyPhysicalProgress.musculature,
+      id_customer: customer,
+      stature: bodyPhysicalProgress.stature,
+      id: 0,
+      neck: 0,
+      shoulders: 0,
+      chest: 0,
+      abdomen: 0,
+      waist: 0,
+      hips: 0,
+      biceps: 0,
+      forearm: 0,
+      thigh: 0,
+      calf: 0,
+      progress_date: new Date()
+    }
 
-  // }
 
-  getCustomerById(customer:Customer){
+
+
+    // return await lastValueFrom(this.customerService.addPhysicalProgress(bodyPhysicalProgress_temp));
+
+  }
+
+  getCustomerById(customer: Customer) {
 
     // console.log('customer ', customer);
 
@@ -225,9 +281,9 @@ export class CustomersFormComponent implements OnInit {
     // console.log('rhTemp ', rhTemp);
 
 
-    var last_purchase_temp = customer.last_purchase.toString().split('T');
+    var last_purchase_temp = customer.last_purchase != null ? customer.last_purchase.toString().split('T') : '';
 
-    var create_at_temp = customer.create_at.toString().split('T');
+    var create_at_temp = customer.create_at != null ? customer.create_at.toString().split('T') : '';
 
     this.formCustomer.patchValue({
       id: customer.id,
@@ -242,7 +298,7 @@ export class CustomersFormComponent implements OnInit {
       email: customer.email,
       blood_type: blood_type_tem[0],
       eps: customer.eps,
-      date_birth: formatDate(customer.date_birth, 'YYYY-MM-dd','en-US','GMT-5'),
+      date_birth: formatDate(customer.date_birth, 'YYYY-MM-dd', 'en-US', 'GMT-5'),
       rh: rhTemp,
       last_purchase: new Date(last_purchase_temp[0]),
       update_at: new Date()
@@ -250,13 +306,13 @@ export class CustomersFormComponent implements OnInit {
 
   }
 
-  async updateCustomer(){
+  async updateCustomer() {
 
     this.formCustomer.value.state = this.formCustomer.value.state ? 1 : 0;
 
     if (this.formCustomer?.valid) {
 
-      this.formCustomer.value.date_birth = formatDate(this.formCustomer.value.date_birth, 'YYYY-MM-dd','en-US','GMT-5')
+      this.formCustomer.value.date_birth = formatDate(this.formCustomer.value.date_birth, 'YYYY-MM-dd', 'en-US', 'GMT-5')
 
       this.formCustomer.value.update_at = new Date();
 
@@ -268,7 +324,7 @@ export class CustomersFormComponent implements OnInit {
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: '¡Usuario modificado satisfactoriamente!',
+          title: '¡Cliente modificado satisfactoriamente!',
           showConfirmButton: false,
           timer: 3000,
         }).then((resp) => {
@@ -285,19 +341,19 @@ export class CustomersFormComponent implements OnInit {
           Swal.fire({
             position: 'top-end',
             icon: 'error',
-            title: `¡Ya existe un colaborador con el mismo documento`,
+            title: `¡Ya existe un cliente con el mismo documento`,
             showConfirmButton: false,
             timer: 3000,
           })
-        }else{
+        } else {
 
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: `${resp.error}`,
-          showConfirmButton: false,
-          timer: 3000,
-        })
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: `${resp.error}`,
+            showConfirmButton: false,
+            timer: 3000,
+          })
         }
         console.log('resp error', resp);
 
@@ -319,7 +375,7 @@ export class CustomersFormComponent implements OnInit {
   formReset() {
     this.formCustomer.reset({});
 
-    console.log('this.rhSelect ',this.rhSelect);
+    // console.log('this.rhSelect ',this.rhSelect);
 
 
     // this.formCustomer.patchValue({
@@ -327,11 +383,84 @@ export class CustomersFormComponent implements OnInit {
     // })
   }
 
-  measure(perimeters:string){
-    console.log('perimeters ',perimeters);
+  measure(perimeters: string) {
+    console.log('perimeters ', perimeters);
+
+    this.showInputs[perimeters] = !this.showInputs[perimeters];
+
 
 
   }
+
+  inputPerimeters(perimeters: string) {
+
+    // this.showInputs[perimeters] = false;
+
+    const body_fat_tempM = this.showInputs['cuello'] && this.showInputs['cintura'] ? (8.6010 * Math.log10(this.formCustomer.value.waistTemp - this.formCustomer.value.neckTemp) - 7.0041 * Math.log10(this.formCustomer.value.stature) + 3.676) : 0;
+
+    const body_fat_tempF = this.showInputs['cuello'] && this.showInputs['cintura'] && this.showInputs['cadera'] && this.showInputs['cadera'] ? (16.3205 * Math.log10(this.formCustomer.value.waistTemp + this.formCustomer.value.hipsTemp - this.formCustomer.value.neckTemp) - 9.7684 * Math.log10(this.formCustomer.value.stature) - 7.8387) : 0;
+
+    this.formCustomer.patchValue({
+      neck: this.formCustomer.value.neckTemp,
+      waist: this.formCustomer.value.waistTemp,
+      hips: this.formCustomer.value.hipsTemp,
+      cardiobascular: this.showInputs['cadera'] ? (this.formCustomer.value.waistTemp / this.formCustomer.value.hipsTemp).toFixed(2) : 0,
+      abdominalObesity: this.formCustomer.value.stature != 0 ? (this.formCustomer.value.waistTemp / (this.formCustomer.value.stature * 100)).toFixed(2) : 0,
+      body_fat: (this.formCustomer.value.gender == 'M' || this.formCustomer.value.gender['ND'])
+        ? body_fat_tempM.toFixed(2)
+        : body_fat_tempF.toFixed(2),
+      corporalAdiposity : this.formCustomer.value.stature != 0 ? ((this.formCustomer.value.waistTemp / Math.pow((this.formCustomer.value.stature), 1.5)) - 18).toFixed(2) : 0
+    })
+
+
+  }
+
+  calculateImc() {
+
+
+    if (this.formCustomer.value.stature > 0) {
+      this.inputPerimeters('');
+      this.formCustomer.patchValue({
+        imc: (this.formCustomer.value.weight / Math.pow(this.formCustomer.value.stature, 2)).toFixed(2)
+      })
+      this.flagAlertImc = false;
+    } else {
+
+      this.flagAlertImc = true;
+
+    }
+
+
+  }
+
+  selectGender() {
+
+    this.gender = {};
+
+    console.log(this.formCustomer.value.gender);
+
+    this.gender[this.formCustomer.value.gender] = !this.gender[this.formCustomer.value.gender];
+
+    // console.log('this.gender ', this.gender);
+
+
+  }
+
+  validateGender() {
+
+    if (!this.gender[this.formCustomer.value.gender] || this.formCustomer.value.gender == "") {
+      Swal.fire({
+        position: 'center',
+        icon: 'info',
+        title: `Es importante elegir el genero, antes de las medidades iniciales.`,
+        showConfirmButton: false,
+        timer: 1500,
+      })
+    }
+
+
+  }
+
 
 
 }

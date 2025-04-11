@@ -95,6 +95,10 @@ export class PaymentFormComponent {
       if (this.formPayment.value.customer.id) {
         customerPayment  = await lastValueFrom(this.payment_service.getPaymentByUser(this.formPayment.value.customer.id)).then();
 
+        console.log('customerPayment ',customerPayment);
+
+        if (customerPayment != null) {
+          console.log('HOLIIII');
         Swal.fire({
               title: "¿Deseas agregar el nuevo pago?",
               text: `Actualmente el usuario ${this.formPayment.value.customer.name} tiene un plan activo`,
@@ -103,7 +107,7 @@ export class PaymentFormComponent {
               confirmButtonColor: '#3085d6',
               cancelButtonColor: '#d33',
               cancelButtonText: 'Cancelar',
-              confirmButtonText: 'Si, Eliminar!'
+              confirmButtonText: 'Si, Agregar!'
             }).then(async (result) => {
               if (result.isConfirmed) {
 
@@ -118,17 +122,15 @@ export class PaymentFormComponent {
                     timer: 2000
 
                   }).then(async (result) => {
-
-                    console.log('customerPayment ',customerPayment);
-
+                    // console.log('customerPayment ',customerPayment);
 
                     customerPayment.payment_state = 0;
 
                     await lastValueFrom(this.payment_service.updatePayment(customerPayment)).then()
 
-                    // this.pdfSrc = this.payment_service.generatePdf(this.formPayment.value as Payment);
-                    // window.open(this.pdfSrc, '_blank');
-                    // window.location.reload();
+                    this.pdfSrc = await this.payment_service.generatePdf(this.formPayment.value as Payment);
+                    window.open(this.pdfSrc, '_blank');
+                    window.location.reload();
                   });
 
 
@@ -136,6 +138,29 @@ export class PaymentFormComponent {
 
 
             })
+        }else{
+          let respcreatePayment = await lastValueFrom(this.payment_service.createPayment(this.formPayment.value as Payment)).then();
+
+          // console.log('respcreatePayment ',respcreatePayment);
+
+            Swal.fire({
+              text: 'Pago realizado satisfactoriamente',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 2000
+
+            }).then(async resp => {
+              this.pdfSrc = await this.payment_service.generatePdf(this.formPayment.value as Payment);
+              // console.log('this.pdfSrc ',this.pdfSrc);
+
+              window.open(this.pdfSrc, '_blank');
+              window.location.reload();
+
+            })
+        }
+
+
+
         return;
       }
 
@@ -169,7 +194,7 @@ export class PaymentFormComponent {
   public getPaymentById(payment: Payment) {
     // console.log(categoria.category)
 
-    console.log(payment);
+    // console.log(payment);
 
     this.valueSelectCustomer = payment.customer.name,
     this.valueSelectMembership = payment.membership.type_membership;
@@ -268,7 +293,7 @@ export class PaymentFormComponent {
   }
 
   onSelectDropdownValue(option:any) {
-    console.log(option);
+    // console.log(option);
 
   }
 

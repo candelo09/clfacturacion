@@ -44,6 +44,9 @@ export class CustomersListComponent implements OnInit {
 
   public getCustomerById(customer: Customer) {
 
+    console.log('customer ',customer);
+
+
     this.addCustomer.getCustomerById(customer);
 
   }

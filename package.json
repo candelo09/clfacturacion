@@ -32,7 +32,6 @@
     "jspdf": "^3.0.0",
     "jspdf-autotable": "^5.0.2",
     "n2words": "^1.15.0",
-    "ngx-num-to-words": "^15.0.1",
     "pdfjs-dist": "^4.10.38",
     "rxjs": "~7.5.0",
     "sweetalert2": "^11.4.4",

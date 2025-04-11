@@ -21,8 +21,9 @@
                 <button class="nav-link active" id="nav-customer-tab" data-bs-toggle="tab"
                   data-bs-target="#nav-customer" type="button" role="tab" aria-controls="nav-customer"
                   aria-selected="true">Cliente</button>
-                <button class="nav-link" id="nav-progress-tab" data-bs-toggle="tab" data-bs-target="#nav-progress"
-                  type="button" role="tab" aria-controls="nav-progress" aria-selected="false">Medidas Iniciales</button>
+                <button (click)="validateGender()" class="nav-link" id="nav-progress-tab" data-bs-toggle="tab"
+                  data-bs-target="#nav-progress" type="button" role="tab" aria-controls="nav-progress"
+                  aria-selected="false">Medidas Iniciales</button>
               </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -94,7 +95,7 @@
                   </div>
                   <div class="col-3">
                     <select class="form-select" formControlName="rh">
-                      <option value="" disabled selected>Seleccione el RH</option>
+                      <option value="" selected>Seleccione el RH</option>
                       <option *ngFor="let rhS of rhSelect">
                         {{rhS}}</option>
 
@@ -112,7 +113,7 @@
 
 
                 <div class="row g-3">
-                  <div class="col-lg-6">
+                  <div class="col-lg-3">
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
@@ -120,6 +121,16 @@
                       <input type="number" class="form-control" formControlName="phone" placeholder="No. contacto"
                         required>
                     </div>
+                  </div>
+
+                  <div class="col-lg-3">
+                    <select class="form-select" formControlName="gender" (change)="selectGender()">
+                      <option value="" selected>Seleccione el Genero</option>
+                      <option value="M"> Masculino </option>
+                      <option value="F"> Femenino </option>
+                      <option value="ND"> No definido </option>
+
+                    </select>
                   </div>
 
                   <div class="col-lg-6">
@@ -147,21 +158,288 @@
               </div>
               <div class="tab-pane fade" id="nav-progress" role="tabpanel" aria-labelledby="nav-progress-tab">
                 <!-- //TAB PHYSICAL PROGRESS -->
-                <hr>
 
-                <div class="container_silhouette">
-                  <img src="../../../assets/img/siluetaM.jpeg" alt="Silueta" class="silhouette" />
-                  <button type="button" class="btn_silhouette neck" (click)="measure('Cuello')">Cuello</button>
-                  <button type="button" class="btn_silhouette shoulders" (click)="measure('Hombros')">Hombros</button>
-                  <button type="button" class="btn_silhouette chest" (click)="measure('Pecho')">Pecho</button>
-                  <button type="button" class="btn_silhouette abdomen" (click)="measure('Abdomen')">Abdomen</button>
-                  <button type="button" class="btn_silhouette waist" (click)="measure('Cintura')">Cintura</button>
-                  <button type="button" class="btn_silhouette hips" (click)="measure('Cadera')">Cadera</button>
-                  <button type="button" class="btn_silhouette biceps" (click)="measure('Brazo')">Brazo</button>
-                  <button type="button" class="btn_silhouette forearm" (click)="measure('Antebrazo')">Antebrazo</button>
-                  <button type="button" class="btn_silhouette thigh" (click)="measure('Muslo')">Muslo</button>
-                  <button type="button" class="btn_silhouette calf" (click)="measure('Pantorrilla')">Pantorrilla</button>
+                <div class="container px-4 p-4">
+
+                  <!-- <h1 class="display-6 text-center text-bold">Progreso Físico</h1> -->
+                  <div class="row gx-5">
+                    <div class="col">
+                      <div class="p-3 border bg-light">
+                        <h5 class="p-2"><i class="fas fa-weight"></i> Indice de masa corporal(IMC)</h5>
+                        <div class="row">
+                          <div class="col-6">
+                            <div class="form-floating mb-3">
+                              <input type="number" class="form-control" id="floatingInputWeight"
+                                placeholder="Ingrese el peso en (KG)" formControlName="weight"
+                                (change)="calculateImc()">
+                              <label for="floatingInputWeight">Ingrese el peso en (KG)</label>
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="form-floating mb-3">
+                              <input type="number" class="form-control" id="floatingInputHeight"
+                                placeholder="Ingrese la estatura en (cm)" formControlName="stature"
+                                (change)="calculateImc()">
+                              <label for="floatingInputHeight">Ingrese la estatura en (m)</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div *ngIf="flagAlertImc" class="alert alert-warning d-flex align-items-center" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:">
+                              <use xlink:href="#exclamation-triangle-fill" />
+                            </svg>
+                            <div>
+                              La estatura debe ser un valor mayor a 0
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="form-floating mb-3">
+                              <input type="number" class="form-control" id="floatingInputImc"
+                                placeholder="% Indice masa corporal" readonly formControlName="imc">
+                              <label for="floatingInputImc">% Indice masa corporal</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <hr>
+                        <!--INDICE DE RIESGO METABÓLICO-->
+                        <h5 class="p-2"><i class="fas fa-weight"></i> Indice de riesgo metabólico</h5>
+                        <div class="row">
+                          <div class="col-6">
+                            <div class="form-floating mb-3">
+                              <input type="number" class="form-control" id="floatingInputhips"
+                                placeholder="Medida de cintura en (cm)" formControlName="waist" readonly>
+                              <label for="floatingInputhips">Medida de cintura en (cm)</label>
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="form-floating mb-3">
+                              <input type="number" class="form-control" id="floatingInputwaist"
+                                placeholder="Medida de cadera en (cm)" formControlName="hips" readonly>
+                              <label for="floatingInputwaist">Medida de cadera en (cm)</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="form-floating mb-3">
+                              <input type="number" class="form-control" id="floatingInputcardioB"
+                                placeholder="% Indice cardiobascular(Cintura/Cadera)" readonly
+                                formControlName="cardiobascular">
+                              <label for="floatingInputcardioB">% Riesgo cardiobascular(Cintura/Cadera)</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="form-floating mb-3">
+                              <input type="number" class="form-control" id="floatingInputObesiAbd"
+                                placeholder="% Obesidad abdominal(Citura/Altura)" formControlName="abdominalObesity"
+                                readonly>
+                              <label for="floatingInputObesiAbd">% Obesidad abdominal(Cintura/Altura)</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <hr>
+                        <!--GRASA CORPORAL-->
+                        <div class="row">
+                          <div class="col-6">
+                            <h5 class="p-2"><i class="fas fa-weight"></i> Grasa Corporal </h5>
+                          </div>
+                          <div class="col-6 text-end">
+                            <button type="button" class="btn btn-info" ngbPopover="Este es un popover descartable"
+                              popoverTitle="Título" triggers="focus">
+                              Mostrar popover
+                            </button>
+
+                          </div>
+                        </div>
+
+
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="form-floating mb-3">
+                              <input type="number" class="form-control" id="floatingInputneck"
+                                placeholder="Medida de cuello en (cm)" formControlName="neck" readonly>
+                              <label for="floatingInputneck">Medida de cuello en (cm)</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="form-floating mb-3">
+                              <input type="number" class="form-control" id="floatingInputFat"
+                                placeholder="% Grasa(Cintura,Cuello,Cadera,Altura)" formControlName="body_fat" readonly>
+                              <label for="floatingInputFat">% Grasa(Cintura,Cuello,Cadera,Altura)</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="form-floating mb-3">
+                              <input type="number" class="form-control" id="floatingInputAdiposity"
+                                placeholder="% Adiposidad Corporal(Cadera y Altura)" formControlName="corporalAdiposity"
+                                readonly>
+                              <label for="floatingInputAdiposity">% Adiposidad Corporal(Cadera y Altura)</label>
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="p-3 border bg-light">
+                        <h5 class="text-bold text-center">Medidas Corporales</h5>
+                        <!-- <hr> -->
+                        <div *ngIf="gender.M == true || gender.ND == true" class="container_silhouette">
+                          <img src="assets/img/siluetaM.jpeg" alt="Silueta" class="img-fluid rounded" />
+
+                          <!--PERIMETRO CUELLO-->
+                          <button type="button" class="btn_silhouette neck" (click)="measure('cuello')">Cuello</button>
+                          <input *ngIf="showInputs.cuello" class="btn_silhouette neck" id="neck"
+                            formControlName="neckTemp" type="number" placeholder="Medida del cuello en (cm)"
+                            aria-label=".form-control-sm neck" (change)="inputPerimeters('cuello')">
+
+                          <!--PERIMETRO HOMBROS-->
+                          <button type="button" class="btn_silhouette shoulders"
+                            (click)="measure('hombros')">Hombros</button>
+                          <input *ngIf="showInputs.hombros" class="btn_silhouette shoulders" id="shoulders"
+                            formControlName="shouldersTemp" type="number" placeholder="Medida de los hombros en (cm)"
+                            aria-label=".form-control-sm shoulders" (change)="inputPerimeters('hombros')">
+
+                          <!--PERIMETRO PECHO-->
+                          <button type="button" class="btn_silhouette chest" (click)="measure('pecho')">Pecho</button>
+                          <input *ngIf="showInputs.pecho" class="btn_silhouette chest" id="chest"
+                            formControlName="chestTemp" type="number" placeholder="Medida del pecho en (cm)"
+                            aria-label=".form-control-sm chest" (change)="inputPerimeters('pecho')">
+
+                          <!--PERIMETRO ABDOMEN-->
+                          <button type="button" class="btn_silhouette abdomen"
+                            (click)="measure('abdomen')">Abdomen</button>
+                          <input *ngIf="showInputs.abdomen" class="btn_silhouette abdomen" id="abdomen"
+                            formControlName="abdomenTemp" type="number" placeholder="Medida del abdomen en (cm)"
+                            aria-label=".form-control-sm abdomen" (change)="inputPerimeters('abdomen')">
+
+
+                          <!--PERIMTRO CINTURA-->
+                          <button type="button" class="btn_silhouette waist"
+                            (click)="measure('cintura')">Cintura</button>
+                          <input *ngIf="showInputs.cintura" class="btn_silhouette waist" id="waist" type="number"
+                            placeholder="Medida de Cintura en (cm)" aria-label=".form-control-sm waist"
+                            formControlName="waistTemp" (change)="inputPerimeters('cintura')">
+
+                          <!--PERIMETRO CADERA-->
+                          <button type="button" class="btn_silhouette hips" (click)="measure('cadera')">Cadera</button>
+                          <input *ngIf="showInputs.cadera" class="btn_silhouette hips" id="hips" type="number"
+                            placeholder="Medida de Cadera en (cm)" aria-label=".form-control-sm hips"
+                            formControlName="hipsTemp" (change)="inputPerimeters('cadera')">
+
+                          <!--PERIMETRO BRAZO-->
+                          <button type="button" class="btn_silhouette biceps" (click)="measure('brazo')">Brazo</button>
+                          <input *ngIf="showInputs.brazo" class="btn_silhouette biceps" id="biceps"
+                            formControlName="bicepsTemp" type="number" placeholder="Medida deL brazo en (cm)"
+                            aria-label=".form-control-sm biceps" (change)="inputPerimeters('brazo')">
+
+                          <!--PERIMETRO ANTEBRAZO-->
+                          <button type="button" class="btn_silhouette forearm"
+                            (click)="measure('antebrazo')">Antebrazo</button>
+                          <input *ngIf="showInputs.antebrazo" class="btn_silhouette forearm" id="forearm"
+                            formControlName="forearmTemp" type="number" placeholder="Medida del antebrazo en (cm)"
+                            aria-label=".form-control-sm forearm" (change)="inputPerimeters('antebrazo')">
+
+                          <!--PERIMETRO MUSLO-->
+                          <button type="button" class="btn_silhouette thigh" (click)="measure('muslo')">Muslo</button>
+                          <input *ngIf="showInputs.muslo" class="btn_silhouette thigh" id="thigh"
+                            formControlName="thighTemp" type="number" placeholder="Medida del muslo en (cm)"
+                            aria-label=".form-control-sm thigh" (change)="inputPerimeters('muslo')">
+
+                          <!--PERIMETRO PANTORRILLA-->
+                          <button type="button" class="btn_silhouette calf"
+                            (click)="measure('pantorrilla')">Pantorrilla</button>
+                          <input *ngIf="showInputs.pantorrilla" class="btn_silhouette calf" id="calf"
+                            formControlName="calfTemp" type="number" placeholder="Medida de la pantorilla en (cm)"
+                            aria-label=".form-control-sm calf" (change)="inputPerimeters('pantorilla')">
+                        </div>
+
+                        <div *ngIf="gender.F == true" class="container_silhouette">
+                          <img src="assets/img/siluetaF.jpeg" alt="Silueta" class="img-fluid rounded" />
+
+                          <!--PERIMETRO CUELLO-->
+                          <button type="button" class="btn_silhouette neck" (click)="measure('cuello')">Cuello</button>
+                          <input *ngIf="showInputs.cuello" class="btn_silhouette neck" id="neck"
+                            formControlName="neckTemp" type="number" placeholder="Medida del cuello en (cm)"
+                            aria-label=".form-control-sm neck" (change)="inputPerimeters('cuello')">
+
+                          <!--PERIMETRO HOMBROS-->
+                          <button type="button" class="btn_silhouette shoulders"
+                            (click)="measure('hombros')">Hombros</button>
+                          <input *ngIf="showInputs.hombros" class="btn_silhouette shoulders" id="shoulders"
+                            formControlName="shouldersTemp" type="number" placeholder="Medida de los hombros en (cm)"
+                            aria-label=".form-control-sm shoulders" (change)="inputPerimeters('hombros')">
+
+                          <!--PERIMETRO PECHO-->
+                          <button type="button" class="btn_silhouette chest" (click)="measure('pecho')">Pecho</button>
+                          <input *ngIf="showInputs.pecho" class="btn_silhouette chest" id="chest"
+                            formControlName="chestTemp" type="number" placeholder="Medida del pecho en (cm)"
+                            aria-label=".form-control-sm chest" (change)="inputPerimeters('pecho')">
+
+                          <!--PERIMETRO ABDOMEN-->
+                          <button type="button" class="btn_silhouette abdomen"
+                            (click)="measure('abdomen')">Abdomen</button>
+                          <input *ngIf="showInputs.abdomen" class="btn_silhouette abdomen" id="abdomen"
+                            formControlName="abdomenTemp" type="number" placeholder="Medida del abdomen en (cm)"
+                            aria-label=".form-control-sm abdomen" (change)="inputPerimeters('abdomen')">
+
+
+                          <!--PERIMTRO CINTURA-->
+                          <button type="button" class="btn_silhouette waist"
+                            (click)="measure('cintura')">Cintura</button>
+                          <input *ngIf="showInputs.cintura" class="btn_silhouette waist" id="waist" type="number"
+                            placeholder="Medida de Cintura en (cm)" aria-label=".form-control-sm waist"
+                            formControlName="waistTemp" (change)="inputPerimeters('cintura')">
+
+                          <!--PERIMETRO CADERA-->
+                          <button type="button" class="btn_silhouette hips" (click)="measure('cadera')">Cadera</button>
+                          <input *ngIf="showInputs.cadera" class="btn_silhouette hips" id="hips" type="number"
+                            placeholder="Medida de Cadera en (cm)" aria-label=".form-control-sm hips"
+                            formControlName="hipsTemp" (change)="inputPerimeters('cadera')">
+
+                          <!--PERIMETRO BRAZO-->
+                          <button type="button" class="btn_silhouette biceps" (click)="measure('brazo')">Brazo</button>
+                          <input *ngIf="showInputs.brazo" class="btn_silhouette biceps" id="biceps"
+                            formControlName="bicepsTemp" type="number" placeholder="Medida deL brazo en (cm)"
+                            aria-label=".form-control-sm biceps" (change)="inputPerimeters('brazo')">
+
+                          <!--PERIMETRO ANTEBRAZO-->
+                          <button type="button" class="btn_silhouette forearm"
+                            (click)="measure('antebrazo')">Antebrazo</button>
+                          <input *ngIf="showInputs.antebrazo" class="btn_silhouette forearm" id="forearm"
+                            formControlName="forearmTemp" type="number" placeholder="Medida del antebrazo en (cm)"
+                            aria-label=".form-control-sm forearm" (change)="inputPerimeters('antebrazo')">
+
+                          <!--PERIMETRO MUSLO-->
+                          <button type="button" class="btn_silhouette thigh" (click)="measure('muslo')">Muslo</button>
+                          <input *ngIf="showInputs.muslo" class="btn_silhouette thigh" id="thigh"
+                            formControlName="thighTemp" type="number" placeholder="Medida del muslo en (cm)"
+                            aria-label=".form-control-sm thigh" (change)="inputPerimeters('muslo')">
+
+                          <!--PERIMETRO PANTORRILLA-->
+                          <button type="button" class="btn_silhouette calf"
+                            (click)="measure('pantorrilla')">Pantorrilla</button>
+                          <input *ngIf="showInputs.pantorrilla" class="btn_silhouette calf" id="calf"
+                            formControlName="calfTemp" type="number" placeholder="Medida de la pantorilla en (cm)"
+                            aria-label=".form-control-sm calf" (change)="inputPerimeters('pantorilla')">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+
+
                 <!-- <div class="row g-3">
                   <div class="col-lg-6">
                     <div class="form-floating mb-3">
@@ -409,7 +687,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
                       </div>
-                      <input type="number" class="form-control" formControlName="phone" placeholder="No. contacto"
+                      <input type="number" class="form-control" formControlName="phone" placeholder="No. Contacto"
                         required>
                     </div>
                   </div>
@@ -563,3 +841,65 @@
   </div>
 </form>
 
+
+<!--TABLA GRASA CORPORAL-->
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="bodyFat" tabindex="-1" aria-labelledby="bodyFatLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bodyFatLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5><i class="fas fa-female"></i> Mujeres</h5>
+        <table class="table-primary">
+
+          <thead>
+            <tr>
+              <th scope="col">Clasificación</th>
+              <th scope="col">% Grasa</th>
+              <th scope="col">Interpretación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Escencial</td>
+              <td>10-13%</td>
+              <td>Atletas élite</td>
+            </tr>
+            <tr>
+              <td>Fitness</td>
+              <td>14-20%</td>
+              <td>Salud avanzado</td>
+            </tr>
+            <tr>
+              <td>Aceptable</td>
+              <td>21-24%</td>
+              <td>Rango normal</td>
+            </tr>
+            <tr>
+              <td>Sobrepeso</td>
+              <td>25-31%</td>
+              <td>Riesgo metabólico leve</td>
+            </tr>
+            <tr>
+              <td>Obesidad</td>
+              <td>≥ 32%</td>
+              <td>Riesgo alto</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -65,32 +65,25 @@
 # CMD ["node", "server.js"]
 
 
-# 1️⃣ Fase de construcción: Angular
-FROM node:20-alpine AS build
+# 1️⃣ Fase de construcción
+FROM node:20 AS build
 WORKDIR /app
 
-# Copiar solo archivos necesarios para evitar reinstalar dependencias
 COPY package.json package-lock.json ./
-RUN npm ci --only=production
-
-# Copiar el código fuente después para aprovechar la caché de dependencias
+RUN npm install --force
 COPY . .
 
-# Construir Angular en producción
 RUN npm run build --configuration=production --base-href=/clfacturacion/
 
-# 2️⃣ Fase final: Servidor Express ligero
+# 2️⃣ Fase final
 FROM node:20-alpine
 WORKDIR /app
 
-# Copiar solo la build de Angular y Express desde la fase anterior
-COPY --from=build /app/dist ./dist
+# Copiar correctamente la build
+COPY --from=build /app/dist/clfacturacion ./dist/clfacturacion
 COPY --from=build /app/server.js .
 COPY --from=build /app/package.json .
 COPY --from=build /app/node_modules ./node_modules
 
-# Exponer puerto del servidor Express
 EXPOSE 4200
-
-# Iniciar servidor Express
 CMD ["node", "server.js"]
